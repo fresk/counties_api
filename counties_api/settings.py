@@ -2,15 +2,15 @@
 import sys
 from os.path import abspath, basename, dirname, join, normpath
 
+DEBUG = False
+
 ########## PATH CONFIGURATION
 DJANGO_ROOT = dirname(abspath(__file__))
 SITE_ROOT = dirname(DJANGO_ROOT)
 SITE_NAME = basename(DJANGO_ROOT)
 sys.path.append(DJANGO_ROOT)
 
-print "DJANGO_ROOT", DJANGO_ROOT
-print "SITE_ROOT", SITE_ROOT
-print "SITE_NAME", SITE_NAME
+
 
 ########## API KEYS
 FILEPICKER_API_KEY = "Py0NB_yvTwGdkp6cz2Ee"
@@ -39,7 +39,7 @@ INSTALLED_APPS =  (
     #'django.contrib.gis',
     'south',
     'rest_framework',
-    'debug_toolbar',
+    #'debug_toolbar',
     'crispy_forms',
     'social_auth',
     'json_field',
@@ -54,8 +54,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    #'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ########## SECURITY CONFIGURATION
@@ -91,21 +91,9 @@ SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/tmp/counties_api.db',
+        'NAME': join(SITE_ROOT, 'counties_api.db')
     }
 }
-'''
-DATABASES = {
-    'default': {
-         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-         'NAME': 'counties_api',
-         'USER': 'dca',
-         'PASSWORD': 'dca',
-         'HOST': 'localhost',
-         'PORT': '5432',
-     }
-}
-'''
 
 ########## REST API FRAMEWORK
 REST_FRAMEWORK = {
@@ -124,7 +112,7 @@ REST_FRAMEWORK = {
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'thoma@gmail.com'
+EMAIL_HOST_USER = 'thomas.hansen@gmail.com'
 EMAIL_HOST_PASSWORD = 'qdzxlfwiojmxvvtn'
 
 ########## LOCALE CONFIGURATION
@@ -177,7 +165,6 @@ CRISPY_TEMPLATE_PACK = "bootstrap"
 
 
 ########## DEBUG CONFIGURATION
-DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.version.VersionDebugPanel',
@@ -198,9 +185,6 @@ DEBUG_TOOLBAR_CONFIG = {
     'ENABLE_STACKTRACES' : True,
 }
 
-def show_toolbar():
-    return True
-SHOW_TOOLBAR_CALLBACK = show_toolbar
 
 ########## LOGGING CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#logging
@@ -229,6 +213,14 @@ LOGGING = {
             'handlers': ['mail_admins'],
             'level': 'ERROR',
             'propagate': True,
+
         },
     }
 }
+
+
+
+try:
+   from local_settings import *
+except ImportError, e:
+   pass

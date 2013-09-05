@@ -1,5 +1,9 @@
 *.py[cod]
 
+*.db
+
+counties_api/local_settings.py
+
 # C extensions
 *.so
 
