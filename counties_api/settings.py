@@ -39,7 +39,7 @@ INSTALLED_APPS =  (
     #'django.contrib.gis',
     'south',
     'rest_framework',
-    #'debug_toolbar',
+    'debug_toolbar',
     'crispy_forms',
     'social_auth',
     'json_field',
@@ -54,7 +54,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #'django.middleware.clickjacking.XFrameOptionsMiddleware',
     #'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
