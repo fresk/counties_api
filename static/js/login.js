@@ -54,18 +54,19 @@ var persona_logout_finalize = function(){
     );
 }
 
-navigator.id.watch({
-  onlogin: persona_login_verify,
-  onlogout: persona_logout_finalize 
-});
+//navigator.id.watch({
+//  onlogin: persona_login_verify,
+//  onlogout: persona_logout_finalize 
+//});
 
 $('.persona_login_btn').on('click', function (e){
   e.preventDefault();
-  navigator.id.request(); 
+  navigator.id.get(persona_login_verify); 
 });
 
 $('.persona_logout_btn').on('click', function (e){
   e.preventDefault();
   navigator.id.logout(); 
+  persona_logout_finalize();
 });
 
