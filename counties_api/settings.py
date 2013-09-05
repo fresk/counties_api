@@ -36,7 +36,7 @@ INSTALLED_APPS =  (
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'django.contrib.admin',
-    'django.contrib.gis',
+    #'django.contrib.gis',
     'south',
     'rest_framework',
     'debug_toolbar',

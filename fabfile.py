@@ -9,18 +9,19 @@ from fagungis.tasks import *
 def counties_api():
     #  name of your project - no spaces, no special chars
     env.project = 'counties_api'
-    #  hg repository of your project
+    #use git
+    env.repository_type = 'git'
+    #  git repository of your project
     env.repository = 'git@github.com:fresk/counties_api.git'
     #  hosts to deploy your project, users must be sudoers
-    env.repository_type = 'git'
     env.hosts = ['root@192.241.186.175', ]
     # additional packages to be installed on the server
     env.additional_packages = [
-        'mercurial', 'git'
+        'mercurial', 'git', 'libpq-dev', 'python-dev'
     ]
     #  system user, owner of the processes and code on your server
     #  the user and it's home dir will be created if not present
-    env.django_user = 'django'
+    env.django_user = 'root'
     # user group
     env.django_user_group = env.django_user
     #  the code of your project will be located here
@@ -32,16 +33,16 @@ def counties_api():
     #  the path where manage.py of this project is located
     env.django_project_root = env.code_root
     #  the Python path to a Django settings module.
-    env.django_project_settings = 'settings'
+    env.django_project_settings = 'counties_api.settings'
     #  django media dir
     env.django_media_path = join(env.code_root, 'media')
     #  django static dir
     env.django_static_path = join(env.code_root, 'static')
     #  django media url and root dir
-    env.django_media_url = '/site_media/media/'
+    env.django_media_url = '/media/'
     env.django_media_root = env.code_root
     #  django static url and root dir
-    env.django_static_url = '/site_media/static/'
+    env.django_static_url = '/static/'
     env.django_static_root = env.code_root
     #  do you use south in your django project?
     env.south_used = True
