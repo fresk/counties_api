@@ -2,7 +2,7 @@
 import sys
 from os.path import abspath, basename, dirname, join, normpath
 
-DEBUG = False
+DEBUG = True
 
 ########## PATH CONFIGURATION
 DJANGO_ROOT = dirname(abspath(__file__))
