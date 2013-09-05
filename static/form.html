@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>fresk</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width">
+<link rel="shortcut icon" href="/static/ico/favicon.ico" type="image/x-icon" />
+<link rel="apple-touch-icon" href="/static/ico/apple-touch-icon.png" />
+<link rel="apple-touch-icon" sizes="57x57" href="/static/ico/apple-touch-icon-57x57.png" />
+<link rel="apple-touch-icon" sizes="72x72" href="/static/ico/apple-touch-icon-72x72.png" />
+<link rel="apple-touch-icon" sizes="114x114" href="/static/ico/apple-touch-icon-114x114.png" />
+<link rel="apple-touch-icon" sizes="144x144" href="/static/ico/apple-touch-icon-144x144.png" />
+<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+<link rel="stylesheet" href="/static/css/bootstrap-responsive.min.css">
+<link rel="stylesheet" href="/static/css/bootstrap-timepicker.css">
+<link rel="stylesheet" href="/static/css/bootstrap-select.css">
+<link rel="stylesheet" href="/static/css/main.css">
+</head>
+
+<body>
+<!--[if lt IE 7]>
+    <p class="chromeframe">
+    You are using an <strong>outdated</strong> browser.   Please 
+    <a href="http://browsehappy.com/"> upgrade your browser </a> or 
+    <a href="http://www.google.com/chromeframe/?redirect=true"> activate 
+      Google Chrome Frame</a> to improve your experience. 
+    </p>
+    <![endif]-->
+
+
+<!-- Nav Menu -->
+<div id="navbar" class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container-fluid">
+      <a class="brand" href="#">99 Counties App</a>
+      <div class="nav-collapse collapse">       
+        <p class="navbar-text pull-right">
+        <a href="/logout/" class="navbar-link">logout</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="main-container" class="container-fluid" >
+  <div class="row-fluid">
+    <div class="span12">
+      <h3>Add a New Location</h3>
+      <hr/>
+
+      <form  id="form" action="/locations/create/" class="form-horizontal" method="post" >
+        <fieldset>
+
+          <div id="div_id_name" class="control-group">
+            <label for="id_name" class="control-label requiredField"> 
+              Title / Name 
+              <span class="asteriskField">*</span>
+            </label>
+            <div class="controls">
+              <input placeholder="My Location" class="textinput textInput" id="id_name" maxlength="255" name="name" type="text" /> <br/>
+            </div>
+          </div>
+
+
+          <div id="div_id_category" class="control-group">
+            <label for="id_category"  class="control-label requiredField">
+              Category
+              <span class="asteriskField">*</span>
+            </label>
+            <div class="controls">
+              <label class="radio inline">
+                <input type="radio" checked="checked" name="category" id="id_category_1" value="Museum" > Museum 
+              </label>
+              <label class="radio inline">
+                <input type="radio" name="category" id="id_category_2" value="Theater" >Theater
+              </label>
+              <label class="radio inline">
+                <input type="radio" name="category" id="id_category_3" value="Historic Site" >Historic Site
+              </label>
+              <label class="radio inline">
+                <input type="radio" name="category" id="id_category_4" value="Barn" >Barn
+              </label>
+            </div>
+          </div>
+
+
+          <div id="div_id_images" class="control-group">
+            <label for="id_images" class="control-label requiredField"> 
+              Images
+              <span class="asteriskField">*</span>
+            </label>
+            <div class="controls">
+
+              <input type="filepicker"
+              data-fp-button-text="Add Images"
+              data-fp-button-class="btn btn-success"
+              data-fp-apikey="Py0NB_yvTwGdkp6cz2Ee" 
+              data-fp-mimetypes="image/*" 
+              data-fp-container="modal" 
+              data-fp-multiple="true" 
+              data-fp-services="COMPUTER,DROPBOX,FACEBOOK,GOOGLE_DRIVE,FLICKR,GMAIL,INSTAGRAM,PICASA,FTP,WEBDAV" 
+              onchange="location_form_add_images(event)"
+              />
+
+
+              <input type="hidden" name="images[]" />
+              <div id="location-form-images-container">
+
+                  <input type="hidden" id="image_list" name="image_list" value="" class="location-image-list">
+                <script id="tmpl_location_image" type="text/html">
+                  <div class="thumbnail-container">
+                  <img src="{{url}}" class="img-rounded location-thumnail location-form-image" />
+                  <a href="#" class="remove_image_btn">remove</a>
+                  </div>
+                </script>
+
+              
+              
+              </div>
+
+
+            </div>
+          </div>
+        </fieldset>
+
+
+        <fieldset>
+          <legend>Address</legend>
+
+          <input type="hidden" name="geo_location" id="geo_location_input" value="" /> 
+          <div class="row-fluid" >
+
+            <div style="float:left;margin-right:40px;">
+
+              <div class="control-group">
+                <label for="address" class="control-label">	
+                  Street Address
+                </label>
+                <div class="controls"><input name="address[street]" placeholder="123 Street" type="text" value="" id="address">
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label for="zip" class="control-label">	
+                  Zip Code
+                </label>
+                <div class="controls"><input name="address[zip]" type="text" value="" id="zip">
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label for="city" class="control-label">	
+                  City
+                </label>
+                <div class="controls"><input name="address[city]" type="text" value="" id="city">
+                </div>
+              </div>
+
+
+              <div class="control-group">
+                <label for="country" class="control-label">	
+                  State
+                </label>
+                <div class="controls">
+                  <select name="address[state]" id="state" disabled>
+                    <option value="IA">Iowa</option>
+                  </select>
+                </div>
+              </div>
+
+
+
+            </div>
+            <div id="address-map-container"></div>
+
+          </fieldset>
+
+
+
+          <fieldset>
+            <legend>Contact Information</legend>
+
+            <div id="div_id_email" class="control-group">
+              <label for="id_email" class="control-label requiredField">
+                Email
+                <span class="asteriskField">*</span>
+              </label>
+              <div class="controls">
+                <input class="textinput textInput" id="id_email" maxlength="75" name="constact[email]" type="text" /> 
+              </div>
+            </div>
+
+            <div id="div_id_phone" class="control-group">
+              <label for="id_phone" class="control-label requiredField">
+                Phone
+                <span class="asteriskField">*</span>
+              </label>
+              <div class="controls">
+                <input class="textinput textInput" id="id_phone" maxlength="20" name="constact[phone]" type="text" /> 
+              </div>
+            </div>
+
+            <div id="div_id_fax" class="control-group">
+              <label for="id_fax" class="control-label ">
+                Fax
+              </label>
+              <div class="controls">
+                <input class="textinput textInput" id="id_fax" maxlength="20" name="constact[fax]" type="text" /> 
+              </div>
+            </div>
+
+          </fieldset>
+
+
+
+          <fieldset>
+            <legend>Visitor Information
+
+            </legend>
+            <div id="div_id_website" class="control-group">
+              <label for="id_website" class="control-label ">
+                Website
+              </label>
+              <div class="controls">
+                <input class="textinput textInput" id="id_website" maxlength="200" name="website" type="text" />
+              </div>
+            </div>
+
+
+            <div id="div_id_description" class="control-group">
+              <label for="id_description" class="control-label requiredField">
+                Description
+                <span class="asteriskField">*</span>
+              </label>
+              <div class="controls">
+                <textarea class="textarea" cols="70" id="id_description" name="description" rows="10"></textarea>
+              </div>
+            </div>
+
+            <div id="div_id_keywords" class="control-group">
+              <label for="id_keywords" class="control-label requiredField">
+                Keywords
+                <span class="asteriskField">*</span>
+              </label>
+              <div class="controls">
+                <textarea class="textarea" cols="70" id="id_keywords" name="keywords" rows="5"></textarea>
+              </div>
+            </div>
+
+          </fieldset>
+
+
+
+
+
+
+
+          <fieldset>
+            <legend>SocialMedia</legend>
+
+            <div id="div_id_facebook" class="control-group">
+              <label for="id_facebook" class="control-label ">
+                Facebook
+              </label>
+              <div class="controls">
+                <input  id="id_facebook" maxlength="100" name="social[facebook]" type="text" /> 
+              </div>
+            </div>
+
+            <div id="div_id_twitter" class="control-group">
+              <label for="id_twitter" class="control-label ">
+                Twitter
+              </label>
+              <div class="controls">
+                <input  id="id_twitter" maxlength="100" name="social[twitter]" type="text" /> 
+              </div>
+            </div>
+
+            <div id="div_id_instagram" class="control-group">
+              <label for="id_instagram" class="control-label ">
+                Instagram
+              </label>
+              <div class="controls">
+                <input  id="id_instagram" maxlength="100" name="social[instagram]" type="text" /> 
+              </div>
+            </div>
+
+          </fieldset>
+
+
+
+
+          <fieldset id="opening_hours_fieldset">
+            <legend>Opening Hours</legend>
+
+            <script id="tmpl_opening_hours" type="text/html">
+
+<div class="control-group">
+                    <label class="control-label">{{Day}}</label>
+                    <div class="controls">
+
+                      <div class="input-append input-prepend bootstrap-timepicker">
+                        <span class="add-on">open</i></span>
+                        <input type="text" class="opening-hours-hours-field input-small" name="hours[{{day}}][open]" data-default-time="9:00 AM" />
+                        <span class="add-on"> <i class="icon-time"></i></span>
+                      </div>
+
+                      <div class="input-append input-prepend bootstrap-timepicker">
+                        <span class="add-on">close</i></span>
+                        <input type="text" class="opening-hours-hours-field input-small" name="hours[{{day}}][close]" data-default-time="5:00 PM" />
+                        <span class="add-on"> <i class="icon-time"></i></span>
+                      </div>
+
+                    </div>
+                  </div>
+
+            </script>
+
+
+
+          </fieldset>
+
+
+
+
+
+          <fieldset>
+            <legend>Admission</legend>
+
+            <div id="div_id_admission_regular" class="control-group">
+              <label for="id_admission_regular" class="control-label ">
+                Regular
+              </label>
+              <div class="controls">
+                <div class="input-prepend input-append">
+                  <span class="add-on">$</span>
+                  <input class="textinput textInput span4" id="id_admission_regular" maxlength="75" name="admission[regular]" type="text" />
+                  <span class="add-on">.00</span>
+                </div>
+              </div>
+            </div>
+
+            <div id="div_id_admission_children" class="control-group">
+              <label for="id_admission_children" class="control-label ">
+                Children
+              </label>
+              <div class="controls">
+                <div class="input-prepend input-append">
+                  <span class="add-on">$</span>
+                  <input class="textinput textInput span4" id="id_admission_children" maxlength="75" name="admission[children]" type="text" />
+                  <span class="add-on">.00</span>
+              </div>                </div>
+            </div>
+
+            <div id="div_id_admission_students" class="control-group">
+              <label for="id_admission_students" class="control-label ">
+                Students
+              </label>
+              <div class="controls">
+                <div class="input-prepend input-append">
+                  <span class="add-on">$</span>
+                  <input class="textinput textInput span4" id="id_admission_students" maxlength="75" name="admission[students]" type="text" />
+                  <span class="add-on">.00</span>
+              </div>                </div>
+            </div>
+
+            <div id="div_id_admission_seniors" class="control-group">
+              <label for="id_admission_seniors" class="control-label ">
+                Seniors
+              </label>
+              <div class="controls">
+                <div class="input-prepend input-append">
+                  <span class="add-on">$</span>
+                  <input class="textinput textInput span4" id="id_admission_seniors" maxlength="75" name="admission[seniors]" type="text" />
+                  <span class="add-on">.00</span>
+              </div>                </div>
+            </div>
+
+
+
+            <div id="div_id_admission_other" class="control-group">
+              <label for="id_admission_other" class="control-label ">
+                Other
+              </label>
+              <div class="controls">
+                <div class="input-prepend input-append">
+                  <span class="add-on">$</span>
+                  <input class="textinput textInput span4" id="id_admission_other" maxlength="75" name="admission[other]" type="text" />
+                  <span class="add-on">.00</span>
+                </div>
+              </div>
+            </div>
+
+
+
+
+          </fieldset>
+
+
+          <div class="form-actions">
+            <input type="submit" name="save" value="Save changes" class="btn btn-primary" id="submit-id-save" /> 
+            <input type="button" name="cancel"  value="Cancel" class="btn" id="button-id-cancel" />
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/js/vendor/jquery-1.10.2.min.js"></script>
+  <script src="/static/js/vendor/jquery-migrate-1.2.1.min.js"></script>
+  <script src="/static/js/vendor/bootstrap.js"></script> 
+  <script src="/static/js/vendor/bootstrap-timepicker.js"></script>
+  <script src="/static/js/vendor/bootstrap-select.js"></script> 
+  <script src="/static/js/vendor/json2.js"></script> 
+  <script src="/static/js/vendor/jquery.serializeJSON.min.js"></script>
+  <script src="/static/js/vendor/ich.js"></script> 
+  <script src="/static/js/vendor/sisyphus.min.js"></script>
+  <script src="/static/js/vendor/nod.js"></script>
+  <script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+  <script src="/static/js/location_form.js"></script>
+
+  <!-- Footer -->
+  <div id="footer" class="container-fluid">
+    <hr>
+    <footer>
+      <p>&copy; fresk 2013 </p>
+    </footer>
+  </div>
+  <script>
+var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+ g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+ s.parentNode.insertBefore(g,s)}(document,'script'));
+  </script>  
+
+  </body>
+  </html>
+
+

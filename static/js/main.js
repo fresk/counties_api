@@ -1,0 +1,2 @@
+window.db = window.localStorage;
+

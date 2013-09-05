@@ -1,0 +1,46 @@
+<!-- Nav Menu -->
+<div id="navbar" class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container-fluid">
+
+      <a class="brand" href="#">99 Counties App</a>
+
+      <div class="nav-collapse collapse">       
+        <p class="navbar-text pull-right">
+          {% if user.is_authenticated %}
+          <a href="{% url 'logout' %}" class="navbar-link">logout</a>
+          {% else %}
+          <a href="{% url 'login' %}" class="navbar-link">login</a>
+          {% endif %}
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row-fluid">
+
+    {% if messages %}
+    <div class="span12">
+      {% for msg in messages %}
+      <div class="alert alert-block">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ msg.message }} ({{ msg.extra_tags }})
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if err_msg %}
+    <div class="span12">
+      <div class="alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ error_msg }}
+      </div>
+    </div>
+    {% endif %}
+
+  </div>
+</div>

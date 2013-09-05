@@ -1,0 +1,54 @@
+body {
+	padding-top: 60px;
+	padding-bottom: 40px;
+}
+
+
+.bootstrap-timepicker {
+    margin-right: 20px;
+}
+
+
+
+
+#location-form-images-container {
+}
+
+.location-form-image {
+    height: 100px;
+}
+
+.thumbnail-container {
+    position:relative;
+    display:inline-block;
+    text-align:left;
+    border:1px solid #000;
+    margin-right: 20px;
+    margin-top: 20px;
+}
+
+.remove_image_btn {
+    position:absolute;
+    margin-top: -2px;
+    right:0;
+}
+
+
+
+#address-map-container{
+    width: 400px;
+    height: 200px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

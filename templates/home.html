@@ -1,0 +1,34 @@
+{% include "header.html" %}
+{% include "navbar.html" %}
+
+<div id="main-container" class="container-fluid" >
+  <div class="row-fluid">
+    <!--
+    <div class="span12">
+      <h1>Home</h1>
+      <a rel="nofollow" class="logout" href="/logout/">Logout</a>
+    </div>
+    <div class="span4">
+      <h3>User data:</h3>
+      <table class="table table-striped">
+        <tr><th>Id:</th> <td>{{ user.id }}</td></tr>
+        <tr><th>Username:</th> <td>{{ user.username }}</td></tr>
+        <tr><th>Email:</th> <td>{{ user.email|default:"Not provided" }}</td></tr>
+        <tr><th>First name:</th> <td>{{ user.first_name|default:"Not provided" }}</td></tr>
+        <tr><th>Last name:</th> <td>{{ user.last_name|default:"Not provided" }}</td></tr>
+        <tr><th>Last login backend:</th> <td>{{ last_login }}</td></tr>
+      </table>
+    </div>
+    -->
+    <div class="span12">
+      <h3>99 County App Locations managed by you:</h3>
+      <table class="table table-striped">
+      </table>
+      <a href="/locations/new/" class="btn btn-primary">Add Location</a>
+    </div>
+
+
+  </div>
+</div>
+
+{% include "footer.html" %}
