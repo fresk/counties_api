@@ -74,7 +74,8 @@ Checker = (function() {
         return v.length === +arg;
       case 'between':
         return v.length >= +arg && v.length <= +sec;
-      case 'integer'        return /^\s*\d+\s*$/.test(v);
+      case 'integer':
+        return /^\s*\d+\s*$/.test(v);
       case 'float':
         return /^[-+]?[0-9]+(\.[0-9]+)?$/.test(v);
       case 'email':
