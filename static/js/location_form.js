@@ -1,3 +1,13 @@
+if (typeof console === "undefined"){
+    console = function(){
+        this.log = function(){
+            return;
+        }
+    }
+}
+
+
+
 //global settings/function
 google.maps.visualRefresh = true;
 String.prototype.capitalize = function() {
@@ -16,20 +26,19 @@ var init_opening_hours = function(){
   };
 
   $(".opening-hours-hours-field").timepicker();
+  $('html, body').scrollTop(0)
 };
 
 
 //google maps API
-var init_google_maps_view = function(){
-  var marker_list = [];
-  var geocoder = new google.maps.Geocoder()
-    var map_container = document.getElementById('address-map-container');
-  var map = new google.maps.Map(map_container, {
+  window.marker_list = [];
+  window.geocoder = new google.maps.Geocoder()
+  window.map_container = document.getElementById('address-map-container');
+  window.map = new google.maps.Map(map_container, {
     zoom: 7,
       center: new google.maps.LatLng(41.59, -93.62),
       mapTypeId: google.maps.MapTypeId.ROADMAP
   });
-};
 
 
 //address iput was changed...trigger map update
@@ -66,6 +75,7 @@ var show_address_on_map = function(address) {
 // thumnail / images from filepicker.io widget
 var location_form_add_images = function(event){
   event.preventDefault();
+  console.log(event)
   for(var i=0;i<event.fpfiles.length;i++){
     add_form_image(event.fpfiles[i].url);
   }
@@ -77,7 +87,6 @@ var update_image_list = function(){
   var images = [];
   $(".location-form-image").each(function(){
     var url = $(this).attr('src');
-    console.log("url:", url)
     images.push( url );
   }); 
   var url_list = images.join();
@@ -90,7 +99,7 @@ var update_image_list = function(){
 //add a single image by its url to teh list of images
 var add_form_image = function(url){
   ctx = {"url": url};
-  var img = ich.tmpl_location_image(ctx);
+  var img = ich.tmpl_location_image2(ctx);
   $("#location-form-images-container").append(img);
 };
 
@@ -98,7 +107,6 @@ var add_form_image = function(url){
 
 //restore form from localstorage
 var restore_from_localstorage = function(){
-  
   //restore images from csv urlsin hiden image_list textfield
   var f = this.targets[0];
   for (var i=0; i< f.length; i++){
@@ -111,6 +119,9 @@ var restore_from_localstorage = function(){
     }
   }
 
+  address_component_changed();
+
+  console.log("RESTORED");
 };
 
 
@@ -120,14 +131,58 @@ var persist_to_localstorage = function(){
 };
 
 
+var show_form_errors = function(){
+  console.log("SHOWING ERRORS");
+  var f = $("#form")[0];
+
+  for(var i in f.__nod.listeners ){
+    var l = f.__nod.listeners[i];
+    console.log(l, l.status);
+    if (l.status == false){
+      $('html, body').animate({
+          scrollTop: l.$el.offset().top -100
+      }, 400);
+      return true;
+    }
+  }
+  return false;
+}
+
+
 //submit the form via AJAX / API
 var submit_form = function( event, data ) {
+  console.log("SUBMIT FORM");
+  var f = $("#form")[0];
+  if (show_form_errors()){
+    return;
+  }
+
   var data = $("#form").serializeJSON();
   console.log(data);
+
+  $.ajax({
+      type: "POST",
+      url: "/api/locations/",
+      // The key needs to match your method's input parameter (case-sensitive).
+      data: JSON.stringify(data),
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      success: function(data){
+        console.log("OK");
+        form_cache.manuallyReleaseData();
+        window.location = "/home";
+      },
+      failure: function(errMsg) {
+          alert(errMsg);
+      }
+  });
+
+
 } 
 
 
-$(document).ready(function(){
+
+var init_form_validation = function(){
 
   //form initialization
   var f = $("form");
@@ -143,25 +198,41 @@ $(document).ready(function(){
     [ '#zip', 'integer', 'Must be a 5-digit zipcode' ],
     [ '#zip', 'presence', 'Must be a 5-digit zipcode' ],
     [ '#zip', 'exact-length:5', '' ],
-    ], { "silentSubmit": true}
+    ], { "silentSubmit": true, 'broadcastError' : true, 'disableSubmitBtn': false }
   );
-  f.on( 'silentSubmit', submit_form );
+  f.on('silentSubmit', submit_form );
 
+  $( window ).on( 'nod_error_fired', function(ev, data){
+    console.log("NOD ERROR", ev, data);
+
+  } );
+
+
+
+
+};
+
+
+
+$(document).ready(function(){
+ 
+ 
+  var f = $("form");
   //needa reference to force serialization on some hidden fields used for 
   //serializing non standard form fields
   window.form_cache = f.sisyphus({
     locationBased: true,
     autoRelease: false,
     onSave: persist_to_localstorage,
-    onRestore: restore_from_localstorage
+    onRestore: restore_from_localstorage,
   });
 
 
   //init the map view next to address
-  init_google_maps_view();
-  $("#address").change(address_component_changed);
-  $("#city").change(address_component_changed);
-  $("#zip").change(address_component_changed);
+  init_opening_hours();
+
+  init_form_validation();
+
 
   //hookup image remove buttons to let user delete images form teh list
   $(".remove_image_btn").on('click', function(){
@@ -170,7 +241,17 @@ $(document).ready(function(){
   });
 
   //opening hours input controlls
-  init_opening_hours();
+  $('html, body').scrollTop(0)
+
+  $("#address").change(address_component_changed);
+  $("#city").change(address_component_changed);
+  $("#zip").change(address_component_changed);
+
+$("#submit-id-save").on('click', function(ev){
+  console.log('submit click', ev, $('form') );
+  submit_form();
+})
+
 
 });
 

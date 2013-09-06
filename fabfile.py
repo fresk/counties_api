@@ -14,7 +14,7 @@ def counties_api():
     #  git repository of your project
     env.repository = 'git@github.com:fresk/counties_api.git'
     #  hosts to deploy your project, users must be sudoers
-    env.hosts = ['root@192.241.186.175', ]
+    env.hosts = ['root@99countyapp.com', ]
     # additional packages to be installed on the server
     env.additional_packages = [
         'mercurial', 'git', 'libpq-dev', 'python-dev'

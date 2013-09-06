@@ -17,12 +17,16 @@ def index(request):
 def home(request):
     """User's home view after being logged in"""
     messages = get_messages(request)
-    return render(request, 'home.html', {'messages': get_messages(request)})
+    return render(request, 'home.html', {
+        'messages': get_messages(request),
+        'locations': request.user.location_set.all()
+    })
 
 """
 Location Views
 """
 
+'''
 @login_required
 def new_location(request):
     ctx = {
@@ -33,8 +37,7 @@ def new_location(request):
         create_location_from_form(request)
         return HttpResponseRedirect(reverse('home'))
     return render(request, 'locations/new_location.html', ctx)
-
-
+'''
 
 """
 Login Views

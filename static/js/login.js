@@ -34,7 +34,8 @@ var persona_login_verify = function (assertion){
       window.location.reload(); 
     }
   ).error( function(xhr, status, err) { 
-      navigator.id.logout();
+      //navigator.id.logout();
+      console.log(xhr, status, err );
       alert("Login failure: " + err);
     }
   );
@@ -49,6 +50,7 @@ var persona_logout_finalize = function(){
         window.location.reload(); 
       }
     ).error( function(xhr, status, err) { 
+      console.log(xhr, status, err );
       alert("Logout failure: " + err); 
       }
     );

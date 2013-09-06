@@ -7,12 +7,16 @@ admin.autodiscover()
 
 
 from views import *
+from rest_api.views import my_locations, new_location, edit_location
+
 
 urlpatterns = patterns(
     "",
     url(r'^$', index, name='index'),
     url(r'^home/$', home, name='home'),
-
+    url(r'^location/new$', new_location, name='new_location'),
+    url(r'^location/(\d+)$$', edit_location, name='edit_location'),
+    url(r'^api/locations/', my_locations, name='my_locations'),
     #url(r'^locations/create/$', locations.views.LocationCreateView.as_view(), name="create_location"),
     #url(r'^locations/create/$', locations.views.CreateLocationView.as_view(), name="create_location"),
 

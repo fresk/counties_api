@@ -7,7 +7,6 @@ distribute==0.6.34
 django-crispy-forms==1.4.0
 django-debug-toolbar==0.9.4
 django-extra-views==0.6.3
-django-fagungis==0.0.17
 django-filepicker==0.1.5
 django-jinja==0.21
 django-json-field==0.5.5
