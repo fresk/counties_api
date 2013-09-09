@@ -14,6 +14,8 @@ urlpatterns = patterns(
     "",
     url(r'^$', index, name='index'),
     url(r'^home/$', home, name='home'),
+    url(r'^admin/$', location_admin, name='location_admin'),
+    url(r'^locations_admin/', my_locations, name='my_locations'),
     url(r'^location/new$', new_location, name='new_location'),
     url(r'^location/(\d+)$$', edit_location, name='edit_location'),
     url(r'^api/locations/', my_locations, name='my_locations'),
@@ -27,7 +29,7 @@ urlpatterns = patterns(
     url(r'^close_login_popup/$', close_login_popup, name='login_popup_close'),
 
     url(r'', include('social_auth.urls')),
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^django-admin/', include(admin.site.urls)),
     #url(r'api/', include('api.urls')),
 )
 

@@ -21,15 +21,27 @@
     </div>
     -->
     <div class="span12">
+    {% if request.user.is_staff %}
+      <div class="pull-right">
+        <h5>Staff Tools:</h5>
+        <ul>
+          <li><a href="/admin/">Show all Locations</a></li>
+        </ul>
+      </div>
+
+    {% endif %}
+
       <h3>99 County App Locations managed by you:</h3>
       <ul>
         {% for l in locations %}
-        <li><a href="/location/{{l.id}}">{{l.name}}</a></li>
+        <li><a href="/location/{{l.id}}"><h4>{{l.name}}</h4></a></li>
         {% endfor %}
         </ul>
       <a href="/location/new" class="btn btn-primary">Add Location</a>
-    </div>
 
+
+
+    </div>
 
   </div>
 </div>

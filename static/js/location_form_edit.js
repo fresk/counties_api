@@ -109,6 +109,8 @@ var add_form_image = function(url){
 
 //submit the form via AJAX / API
 var submit_form = function( event, data ) {
+  console.log("submit form")
+
   var data = $("#form").serializeJSON();
   console.log(data);
 
@@ -204,6 +206,12 @@ window.map = new google.maps.Map(map_container, {
     $("#address").change(address_component_changed);
   $("#city").change(address_component_changed);
   $("#zip").change(address_component_changed);
+
+
+  $("#submit-id-save").on('click', function(ev){
+  console.log('submit click', ev, $('form') );
+  submit_form();
+})
 
 
 

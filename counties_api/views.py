@@ -22,6 +22,26 @@ def home(request):
         'locations': request.user.location_set.all()
     })
 
+from rest_api.models import Location
+
+@login_required
+def location_admin(request):
+    """admin view of all locations"""
+    messages = get_messages(request)
+    query = Location.objects.all()
+
+    def deserialize(l):
+        d = json.loads(l.data)
+        d['user'] = l.user.email
+        return d
+    locations = [deserialize(l) for l in Location.objects.all()]
+
+    return render(request, 'admin.html', {
+        'messages': get_messages(request),
+        'locations': locations
+    })
+
+
 """
 Location Views
 """
