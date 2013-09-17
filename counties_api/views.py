@@ -13,6 +13,20 @@ Main Views
 def index(request):
     return HttpResponseRedirect(reverse('home'))
 
+
+def contact_view(request):
+	messages = get_messages(request)
+    return render(request, 'contact.html', {'messages': messages})
+
+def about_view(request):
+	messages = get_messages(request)
+    return render(request, 'about.html', {'messages': messages})
+    
+def help_view(request):
+	messages = get_messages(request)
+    return render(request, 'help.html', {'messages': messages})
+
+
 @login_required
 def home(request):
     """User's home view after being logged in"""

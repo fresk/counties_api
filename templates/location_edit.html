@@ -74,16 +74,16 @@
             </label>
             <div class="controls">
               <label class="radio inline">
-                <input type="radio" checked="checked" name="category" id="id_category_1" value="Museum" > Museum 
+                <input type="radio" checked="checked" name="category" id="id_category_museum" value="Museum" > Museum 
               </label>
               <label class="radio inline">
-                <input type="radio" name="category" id="id_category_2" value="Theater" >Theater
+                <input type="radio" name="category" id="id_category_theater" value="Theater" >Theater
               </label>
               <label class="radio inline">
-                <input type="radio" name="category" id="id_category_3" value="Historic Site" >Historic Site
+                <input type="radio" name="category" id="id_category_historic" value="Historic Site" >Historic Site
               </label>
               <label class="radio inline">
-                <input type="radio" name="category" id="id_category_4" value="Barn" >Barn
+                <input type="radio" name="category" id="id_category_barn" value="Barn" >Barn
               </label>
             </div>
           </div>
@@ -434,6 +434,11 @@
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
   <script>
     window.current_record = {{location.data|safe}};
+    
+
+    
+    
+    
   </script>
   <script src="/static/js/location_form_edit.js"></script>
 

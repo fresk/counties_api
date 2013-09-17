@@ -214,6 +214,19 @@ window.map = new google.maps.Map(map_container, {
 })
 
 
+    if (window.current_record.category == "Museum"){
+	    $("#id_category_museum").prop("checked", true);
+    }
+    if (window.current_record.category == "Barn"){
+	    $("#id_category_barn").prop("checked", true);
+    }
+    if (window.current_record.category == "Historic Site"){
+	    $("#id_category_historic").prop("checked", true);
+    }
+    if (window.current_record.category == "Theater"){
+	    $("#id_category_theater").prop("checked", true);
+    }
+
 
 });
 
