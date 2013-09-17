@@ -15,15 +15,15 @@ def index(request):
 
 
 def contact_view(request):
-	messages = get_messages(request)
+    messages = get_messages(request)
     return render(request, 'contact.html', {'messages': messages})
 
 def about_view(request):
-	messages = get_messages(request)
+    messages = get_messages(request)
     return render(request, 'about.html', {'messages': messages})
-    
+
 def help_view(request):
-	messages = get_messages(request)
+    messages = get_messages(request)
     return render(request, 'help.html', {'messages': messages})
 
 
