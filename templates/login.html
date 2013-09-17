@@ -1,24 +1,39 @@
 {% include "header.html" %}
-{% include "navbar.html" %}
+
 
 <div class="container-fluid">
   <div class="row-fluid">
-    <div class="span12">
-      <h3>Login using</h3>
+  
+  	
+  	<div class="span12">
+  	
+  	<div class="span6">
+  	<h1>Welcome.</h1>
+  	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  	</div>
+  	
+  	</div>
+  
+  	
+    <div class="span6" style="margin:0;">
+     
       <form method="post" action="{% url 'socialauth_complete' "browserid" %}" >
         <input type="hidden" name="assertion" value="" id="persona_assertion_field" />
       </form>
       <ul>
         <li>
         <a rel="nofollow" class="persona_login_btn" href="#">
-          Your Email
+          Get Started
+        </a>
+        <a rel="nofollow" class="persona_login_btn" href="#">
+          Login
         </a>
         </li>
-        {% for name in social_auth.backends.oauth2 %}
+        <!--{% for name in social_auth.backends.oauth2 %}
         <li><a rel="nofollow" href="{% url 'socialauth_begin' name %}" class="oauth2_login_btn">
           {{ name|title }}
         </a></li>
-        {% endfor %}
+        {% endfor %}-->
       </ul>
     </div>
   </div>

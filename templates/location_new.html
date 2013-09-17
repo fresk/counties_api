@@ -46,11 +46,16 @@
 
 <div id="main-container" class="container-fluid" >
   <div class="row-fluid">
-    <div class="span12">
+  
+  
+  	<div class="span2"></div>
+  	
+  	
+    <div class="span8" id="formwrap">
       <h3>Add a New Location</h3>
       <hr/>
 
-      <form  id="form" action="/locations/create/" class="form-horizontal" method="post" >
+      <form id="form" action="/locations/create/" class="form-horizontal" method="post" >
         <fieldset>
 
           <div id="div_id_name" class="control-group">
@@ -261,14 +266,14 @@
 
 
           <fieldset>
-            <legend>SocialMedia</legend>
+            <legend>Social Media</legend>
 
             <div id="div_id_facebook" class="control-group">
               <label for="id_facebook" class="control-label ">
                 Facebook
               </label>
               <div class="controls">
-                <input  id="id_facebook" maxlength="100" name="social[facebook]" type="text" /> 
+                <input  id="id_facebook" maxlength="100" name="social[facebook]" type="text" placeholder="https://www.facebook.com/username" /> 
               </div>
             </div>
 
@@ -277,7 +282,7 @@
                 Twitter
               </label>
               <div class="controls">
-                <input  id="id_twitter" maxlength="100" name="social[twitter]" type="text" /> 
+                <input  id="id_twitter" maxlength="100" name="social[twitter]" type="text" placeholder="https://twitter.com/username" /> 
               </div>
             </div>
 
@@ -286,7 +291,7 @@
                 Instagram
               </label>
               <div class="controls">
-                <input  id="id_instagram" maxlength="100" name="social[instagram]" type="text" /> 
+                <input  id="id_instagram" maxlength="100" name="social[instagram]" type="text" placeholder="http://instagram.com/fresk" /> 
               </div>
             </div>
 
@@ -408,8 +413,10 @@
           </div>
 
         </form>
-
-      </div>
+      </div> <!-- end #formwrap -->
+      
+      <div class="span2"></div>
+      
     </div>
   </div>
 

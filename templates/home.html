@@ -20,7 +20,20 @@
       </table>
     </div>
     -->
-    <div class="span12">
+    
+    
+   
+
+    <div class="span6" id="locationswrap">
+      <h3>Locations managed by you: <a href="/location/new" class="btn btn-primary add-location">Add Location</a></h3>
+      <ul class="locations">
+        {% for l in locations %}
+        <li><a href="/location/{{l.id}}"><h4>{{l.name}} - {{ l.category }}</h4></a></li>
+        {% endfor %}
+        </ul>
+    </div>
+    
+    <div class="span6">
     {% if request.user.is_staff %}
       <div class="pull-right">
         <h5>Staff Tools:</h5>
@@ -28,20 +41,11 @@
           <li><a href="/admin/">Show all Locations</a></li>
         </ul>
       </div>
-
     {% endif %}
-
-      <h3>99 County App Locations managed by you:</h3>
-      <ul>
-        {% for l in locations %}
-        <li><a href="/location/{{l.id}}"><h4>{{l.name}}</h4></a></li>
-        {% endfor %}
-        </ul>
-      <a href="/location/new" class="btn btn-primary">Add Location</a>
-
-
-
     </div>
+
+
+    
 
   </div>
 </div>

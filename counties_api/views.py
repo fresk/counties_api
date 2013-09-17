@@ -17,9 +17,15 @@ def index(request):
 def home(request):
     """User's home view after being logged in"""
     messages = get_messages(request)
+
+    def deserialize(l):
+        d = json.loads(l.data)
+        d['user'] = l.user.email
+        return d
+    locations = [deserialize(l) for l in request.user.location_set.all()]
     return render(request, 'home.html', {
         'messages': get_messages(request),
-        'locations': request.user.location_set.all()
+        'locations': locations
     })
 
 from rest_api.models import Location
