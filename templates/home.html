@@ -20,37 +20,48 @@
       </table>
     </div>
     -->
-    
+     <!--
     <div class="row-fluid firstrow">
-	    <div class="span12 whitebg">
-	     <h4>Hi {{ user.username }}</h4>
+	    <div class="span12 nobg">
+	    <h4>Hi {{ user.username }}</h4>
 	    </div>
     </div>
+  -->
+    
+    
+	    {% if request.user.is_staff %}
+	    <div class="row-fluid">
+    	 <div class="span12 whitebg firstrow" id="stafftools">
+	      	<ul>
+	          <li>Staff Tools:</li>
+	          <li><a href="/admin/">Show all Locations</a></li>
+	        </ul>
+	      </div>
+	    </div> 
+	    {% endif %}
+	   
     
     <div class="row-fluid">
-	    <div class="span8" id="locationswrap">
-	      <h3>Locations managed by you: <a href="/location/new" class="btn btn-primary add-location">Add Location</a></h3>
+	    <div class="span8 whitebg" id="locationswrap">
+	      <h3>Your locations: </h3>
+	      
+	      {% if not locations %}
+	      <hr>
+	      <h5> You don't have any spots yet. <a href="/location/new">Let's create one!</a> </h5>
+	      {% endif %}
+	      
 	      <ul class="locations">
 	        {% for l in locations %}
-	        <li><a href="/location/{{l.id}}"><h4>{{l.name}} - {{ l.category }}</h4></a></li>
+	        <li><a href="/location/{{l.id}}">{{l.name}} - {{ l.category }}</a></li>
 	        {% endfor %}
 	        </ul>
 	    </div>
 	    
-	    <div class="span4 whitebg" id="dcanews">
-	    DCA news
+	    <div class="span4" id="dcanews">
+	    <a href="/location/new" class="btn btn-primary add-location">Add Location</a>
 	    </div>
 	    
-	    <div class="span2 whitebg">
-	    {% if request.user.is_staff %}
-	      <div class="pull-right">
-	        <h5>Staff Tools:</h5>
-	        <ul>
-	          <li><a href="/admin/">Show all Locations</a></li>
-	        </ul>
-	      </div>
-	    {% endif %}
-	    </div>
+	    
     </div>
 
     

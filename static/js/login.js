@@ -36,7 +36,7 @@ var persona_login_verify = function (assertion){
   ).error( function(xhr, status, err) { 
       //navigator.id.logout();
       console.log(xhr, status, err );
-      alert("Login failure: " + err);
+      //alert("Login failure: " + err);
     }
   );
 };

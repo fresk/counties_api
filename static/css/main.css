@@ -1,23 +1,33 @@
 body {
 	
-	background: #ccc;
+	background: #fff;
 	color: #222;
 	font-size: 12px;
+	font-family: "museo-sans", "Helvetica", sans-serif;
+	
 }
 
+h1,h2,h3,h4,h5,h6 {padding: 10px 0; margin: 0;font-family: "museo-sans", "Helvetica", sans-serif;}
 h1 {font-size: 5em; font-weight: 100;}
 h3 {font-size: 2em; font-weight: 100;}
 h4 {font-weight: 100;}
+h5 {font-weight: 300; font-size: 1.5em; color: #999;}
 
 a {text-decoration: none;}
 
 ul {list-style: none; padding: 0; margin: 0;}
 
+.btn-primary {background:#2980b9;}
+
 a.persona_login_btn {padding: 10px 25px; font-size: 1.5em; text-transform: uppercase; font-weight: 100;vertical-align: top; text-align: center;   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);   background: #2980b9;   border: 0;  cursor: pointer;   -webkit-box-shadow: inset 0 -2px #2475ab;   box-shadow: inset 0 -2px #2475ab; color: #fff; margin-right: 10px;}
 a.persona_login_btn:hover {background: #2475ab; text-decoration: none;}
 
-.firstrow {margin-bottom: 2.564102564102564%;}
-.whitebg {background: #fff; padding: 15px;}
+#logo {position: fixed; bottom: 20px; right: 20px; opacity: 0.3;}
+#logo:hover {opacity: 1;}
+
+.firstrow {margin-bottom: 10px;}
+.whitebg {background: #fff; padding: 15px;-moz-box-shadow: 0px 0px 1px #888;-webkit-box-shadow: 0px 0px 1px #888;box-shadow: 0px 0px 1px #888;}
+.nobg {border-bottom: 1px solid #fff; padding-bottom: 10px;}
 
 .navbar-inner {
 min-height: 40px;
@@ -27,30 +37,43 @@ background-color: #ffffff;
 border: 1px solid #d4d4d4;
 }
 
+.navbar-link {text-transform: uppercase; font-size: 0.8em;}
+
 /* ////// home.html ////// */
 
-#locationswrap {background: #fff; padding: 5px 15px 15px 15px;}
-
+#locationswrap {background: #fff; padding: 5px 15px 10px 15px;-moz-box-shadow: 0px 0px 0px #888;-webkit-box-shadow: 0px 0px 0px #888;box-shadow: 0px 0px 0px #888;}
+#locationswrap h3 {font-size: 2em;}
+#locationswrap hr {margin: 5px 0 10px 0;}
 a.add-location {float: right; margin-top: 0px;}
-ul.locations {list-style: none;}
-ul.locations li {}
-ul.locations li a {background: #ebebeb; display: block;padding: 15px;}
-ul.locations li a:hover {background: #2980b9; color: #fff; text-decoration: none;}
+a.add-location:hover {background: #277ab0;}
+
+ul.locations {list-style: none; margin-top: 25px;}
+ul.locations li {font-weight: 500; font-size: 1.675em;}
+ul.locations li a {background: #f9f9f9; display: block;padding: 25px 25px 25px 25px; color: #999; border-top: 1px solid #eee;}
+ul.locations li a:hover {background: #ebebeb; color: #fff; text-decoration: none;}
 
 /* ////// location_new.html ////// */
 #formwrap {background: #fff; padding: 15px;}
+#formwrap h3 {text-align: left; padding-left: 25px;}
 input {width: 250px;}
-legend {color:#222; text-transform: uppercase; font-size: 1.5em; font-weight: 200;}
+legend {color:#ccc; text-transform: uppercase; font-size: 1.5em; font-weight: 200; text-align: left; padding-left: 25px;}
 
 #dcanews {min-height: 400px;}
 
+#address-map-container{
+    width: 200px;
+    height: 200px;
+}
 
+.form-actions {background: none; position: fixed;}
+.form-actions input {margin-bottom: 0.5em;}
 
+/* ////// admin ////// */
 
-
-
-
-
+#stafftools {background: #2980b9; color: #fff;}
+#stafftools ul {list-style: none;}
+#stafftools ul li {float: left; margin-right: 10px; font-weight: 100; text-transform: uppercase; font-size: 0.9em;}
+#stafftools ul li a {color: #fff; font-weight: bold; font-size: 1.2em; text-transform: none;}
 
 .belize-hole-flat-button {
   position: relative;
@@ -110,10 +133,7 @@ legend {color:#222; text-transform: uppercase; font-size: 1.5em; font-weight: 20
 
 
 
-#address-map-container{
-    width: 250px;
-    height: 200px;
-}
+
 
 
 

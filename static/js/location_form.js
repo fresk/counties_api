@@ -8,6 +8,19 @@ if (typeof console === "undefined"){
 
 
 
+Array.prototype.remove= function(){
+    var what, a= arguments, L= a.length, ax;
+    while(L && this.length){
+        what= a[--L];
+        while((ax= this.indexOf(what))!= -1){
+            this.splice(ax, 1);
+        }
+    }
+    return this;
+}
+
+
+
 //global settings/function
 google.maps.visualRefresh = true;
 String.prototype.capitalize = function() {
@@ -246,6 +259,38 @@ $(document).ready(function(){
   $("#address").change(address_component_changed);
   $("#city").change(address_component_changed);
   $("#zip").change(address_component_changed);
+
+
+var _admission_categories = [
+	'regular',
+	'children',
+	'students',
+	'seniors',
+];
+
+$('#add_admission_category_btn').on('click', function(ev){
+	var title = window.prompt("Title:","");
+	if($.inArray(title, _admission_categories) != -1){
+		alert("An Admission Category with that title already exists! "+title);
+		return;
+	}
+	if (title){
+		_admission_categories.push(title);
+		ich.tmpl_admission_type({'title':title}).insertBefore($('#add_admission_category_btn'));	
+	}	
+});
+
+$('#admission_fieldset').on('click', function(ev){
+	var t = $(ev.target);
+	if (t.hasClass('remove_admission_type')){
+		var cat = t.data('title');
+		_admission_categories.remove(cat);
+		t.parent().parent().remove();
+	}
+	//$('.remove_admission_type').parent().remove();
+	
+});
+
 
 $("#submit-id-save").on('click', function(ev){
   console.log('submit click', ev, $('form') );

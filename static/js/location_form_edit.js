@@ -6,6 +6,19 @@ if (typeof console === "undefined"){
     }
 }
 
+
+Array.prototype.remove= function(){
+    var what, a= arguments, L= a.length, ax;
+    while(L && this.length){
+        what= a[--L];
+        while((ax= this.indexOf(what))!= -1){
+            this.splice(ax, 1);
+        }
+    }
+    return this;
+}
+
+
 //global settings/function
 google.maps.visualRefresh = true;
 String.prototype.capitalize = function() {
@@ -208,7 +221,52 @@ window.map = new google.maps.Map(map_container, {
   $("#zip").change(address_component_changed);
 
 
-  $("#submit-id-save").on('click', function(ev){
+var _admission_categories = [
+	'regular',
+	'children',
+	'students',
+	'seniors',
+];
+
+
+for (var cat in window.current_record['admission']){
+	if ($.inArray(cat, _admission_categories) != -1){
+		console.log("skipping category", cat);
+		continue;
+		
+	}
+	console.log("adding category", cat, $.inArray(cat, _admission_categories), _admission_categories);
+	var price = window.current_record['admission'][cat];
+	ich.tmpl_admission_type({'title':cat, 'price':price}).insertBefore($('#add_admission_category_btn'));
+}
+
+
+$('#add_admission_category_btn').on('click', function(ev){
+	var title = window.prompt("Title:","");
+	if($.inArray(title, _admission_categories) != -1){
+		alert("An Admission Category with that title already exists!");
+		return;
+	}
+	if (title){
+		_admission_categories.push(title);
+		ich.tmpl_admission_type({'title':title, 'price':''}).insertBefore($('#add_admission_category_btn'));	
+	}	
+});
+
+
+
+$('#admission_fieldset').on('click', function(ev){
+	var t = $(ev.target);
+	if (t.hasClass('remove_admission_type')){
+		var cat = t.data('title');
+		_admission_categories.remove(cat);
+		t.parent().parent().remove();
+	}
+	//$('.remove_admission_type').parent().remove();
+	
+});
+
+$("#submit-id-save").on('click', function(ev){
   console.log('submit click', ev, $('form') );
   submit_form();
 })
