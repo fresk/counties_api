@@ -19,7 +19,7 @@ urlpatterns = patterns(
     url(r'^help$', help_view, name='help'),
 
 
-    url(r'^$', index, name='manage'),
+    url(r'^manage/$', index, name='manage'),
     url(r'^home/$', home, name='home'),
     url(r'^admin/$', location_admin, name='location_admin'),
     url(r'^locations_admin/', my_locations, name='my_locations'),
