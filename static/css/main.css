@@ -1,6 +1,6 @@
 body {
 	
-	background: #fff;
+	background: #eee;
 	color: #222;
 	font-size: 12px;
 	font-family: "museo-sans", "Helvetica", sans-serif;
@@ -37,14 +37,51 @@ background-color: #ffffff;
 border: 1px solid #d4d4d4;
 }
 
+#scene {position: fixed; z-index: 1;}
+
 .navbar-link {text-transform: uppercase; font-size: 0.8em;}
+
+/* ////// login.html ////// */
+
+#aboutcopy {color: #333;}
+#aboutcopy h1 {padding-bottom: 25px; margin-top: 100px;}
+
+
+/* ////// about.html ////// */
+
+#aboutwrap {color: #fff;}
+
+#fyiowa { margin-top: 125px;}
+#info {margin-top: 50px; clear: both;}
+#signup { margin-top: 75px; clear: both;}
+
+.findyour {font-size: 7em;font-weight: 100; float: left;}
+ul.scroll {list-style: none; font-size: 7em;font-weight: 700; float: left; margin: 0 0 0 0.3em; padding: 0;}
+
+.scroll-hidden {display: none;}
+
+#dca-about {position: fixed; bottom: 25px; right: 25px; opacity: 0.3;}
+#dca-about:hover {opacity: 1.0;}
+
+
+
+/* ////// contact.html ////// */
+
+#contactwrap { padding: 0;}
+
+
+
+
+ul.departments {list-style: none; float: left; }
+ul.departments li {margin-bottom: 20px;}
+
 
 /* ////// home.html ////// */
 
 #locationswrap {background: #fff; padding: 5px 15px 10px 15px;-moz-box-shadow: 0px 0px 0px #888;-webkit-box-shadow: 0px 0px 0px #888;box-shadow: 0px 0px 0px #888;}
 #locationswrap h3 {font-size: 2em;}
 #locationswrap hr {margin: 5px 0 10px 0;}
-a.add-location {float: right; margin-top: 0px;}
+a.add-location {float:right;margin-top: 0px;}
 a.add-location:hover {background: #277ab0;}
 
 ul.locations {list-style: none; margin-top: 25px;}
@@ -53,20 +90,22 @@ ul.locations li a {background: #f9f9f9; display: block;padding: 25px 25px 25px 2
 ul.locations li a:hover {background: #ebebeb; color: #fff; text-decoration: none;}
 
 /* ////// location_new.html ////// */
-#formwrap {background: #fff; padding: 15px;}
+#formwrap {background: #fff; padding: 15px;margin-bottom: 1em !important;}
 #formwrap h3 {text-align: left; padding-left: 25px;}
 input {width: 250px;}
 legend {color:#ccc; text-transform: uppercase; font-size: 1.5em; font-weight: 200; text-align: left; padding-left: 25px;}
 
 #dcanews {min-height: 400px;}
 
+.help-inline {position: absolute; background: #fff; z-index: 1000;padding: 10px;}
 #address-map-container{
     width: 200px;
     height: 200px;
+    z-index: 1;
 }
 
-.form-actions {background: none; position: fixed;}
-.form-actions input {margin-bottom: 0.5em;}
+.formfixed {}
+.formbtn {margin-bottom: 0.5em !important;}
 
 /* ////// admin ////// */
 
@@ -143,7 +182,20 @@ legend {color:#ccc; text-transform: uppercase; font-size: 1.5em; font-weight: 20
 
 
 
-
+::-webkit-input-placeholder{
+    color: #ccc;
+    font-style:italic;
+} 
+:focus::-webkit-input-placeholder{
+     text-indent: -999px
+}
+::-moz-placeholder{
+    color: #ccc;
+    font-style:italic;
+}
+:focus::-moz-placeholder{
+     text-indent: -999px
+}
 
 
 
@@ -329,13 +381,35 @@ div.DTFC_LeftFootWrapper table {
 
 
 
+
+
+
+@media (max-width: 799px) {
+   #fyiowa { margin-top: 25px;}
+  .findyour {font-size: 2em; float: left;}
+  ul.scroll {list-style: none; font-size: 2em;float: left; margin: 0 0 0 0.3em; padding: 0;}
+  #aboutwrap #info {margin-top: 30px;}
+  #aboutwrap #signup {margin-top: 50px;}
+  #dca-about {display: none;}
+}
+
+			
+			
+			
+
+
+
 @media (min-width: 980px) {
   body {padding-top: 60px;}
   .nav-support {padding-top: 5px;}
- 
+  .formfixed {position: fixed;}
 }
 
+@media (min-width: 800px) {
 
+  .formfixed {position: fixed;}
+  #aboutwrap {color: #fff; padding-left: 50px;}
+}
 
 
 

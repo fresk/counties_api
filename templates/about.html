@@ -1,21 +1,68 @@
 {% include "header.html" %}
 
+<style>
+body {background: #111;}
+</style>
 
 <div class="container-fluid">
-  <div class="row-fluid">
+  <div class="row" id="aboutwrap">
   
   	
-  	<div class="span12">
+  	<div class="span12" id="fyiowa">
   	
-  	<div class="span6">
-  	<h1>About</h1>
-  	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-  	</div>
+	  	<span class="findyour">Find your</span>
+		 
+		<ul class="scroll-visible scroll">
+	                <li>Iowa.</li>
+	    </ul>
+	            
+	    <ul class="scroll-hidden scroll">
+	
+	        <li>museums.</li>
+	        <li>public art.</li>
+	        <li>theaters.</li>
+	        <li>zoos.</li>
+	        <li>landmarks.</li>
+	        <li>riverwalks.</li>
+	        <li>barns.</li>
+	    </ul>
   	
   	</div>
   
+
+<div class="span8" id="info">
+	<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+</div>
+
+
+<div class="span6" id="signup">
+	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+		#mc_embed_signup {background:none; padding: 0; margin: 0;}
+		#mc_embed_signup form {padding:0; margin:0;}
+		#mc_embed_signup input {background: #111; color: #fff; border:none; border-bottom: 1px solid; padding: 10px; }
+		#mc_embed_signup input.email {margin-right: 0; width: 70%;}
+		#mc_embed_signup input.button {background: none; border: 1px solid #ebebeb; color: #fff; line-height: 30px; font-weight: 300;}
+		#mc_embed_signup input.button:hover {background:#fff; color:#111;}
+		/* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+		   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+	</style>
+	<div id="mc_embed_signup">
+	<form action="http://fresksite.us1.list-manage.com/subscribe/post?u=0e6f67c6b6778ba6ebbcae7dd&amp;id=ccb3c42f60" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+		
+		<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="enter your email to receive updates" required>
+		<div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+	</form>
+	</div>
+</div>
+
+<!--End mc_embed_signup-->
 
   </div>
 </div>
+
+
+<a href="http://www.culturalaffairs.org/" target="_blank"><img src="/static/img/dca-la.png" id="dca-about" alt="Iowa Department of Cultural Affairs" /></a>
+
 
 {% include "footer.html" %}
