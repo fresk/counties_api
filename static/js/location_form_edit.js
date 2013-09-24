@@ -33,16 +33,36 @@ var init_opening_hours = function(){
   for (var i = 0; i  < WEEKDAYS.length; i++) {
     var ctx = {"Day": WEEKDAYS[i].capitalize(), "day": WEEKDAYS[i]};
     var hours_field = ich.tmpl_opening_hours(ctx);
-    $("#opening_hours_fieldset").append(hours_field);
-    $('#id_hours_'+ctx.day+'_open').timepicker(
-        'setTime',
-        window.current_record['hours'][ctx.day]['open']
-    );
-    $('#id_hours_'+ctx.day+'_close').timepicker(
-       'setTime',
-        window.current_record['hours'][ctx.day]['close']
-    );
+    $("#opening_hours_fields").append(hours_field);
+    console.log(ctx.day+'_open',current_record['hours'][ctx.day]);
+ 
+    if (current_record['hours'][ctx.day]['is_closed'] == "on"){
+      console.log("IS CLOSED ON THIS DAY", current_record['hours'][ctx.day]['is_closed'] );
+      $('#id_hours_'+ctx.day+'_open').timepicker()
+      $('#id_hours_'+ctx.day+'_close').timepicker()
+      
+      $(hours_field).find('input').prop('disabled', true);
+      $(hours_field).find('.weekday_closed_checkbox').prop('disabled', false);
+      $(hours_field).find('.weekday_closed_checkbox').prop('checked', true);
+
+    }
+    else{
+      $('#id_hours_'+ctx.day+'_open').timepicker(
+          'setTime',
+          window.current_record['hours'][ctx.day]['open']
+      );
+      $('#id_hours_'+ctx.day+'_close').timepicker(
+         'setTime',
+          window.current_record['hours'][ctx.day]['close']
+      );
+    }
   };
+
+  if (window.current_record['always_open'] == 'on'){
+    console.log("ALWAYS OPEN");
+    $('#id_always_open').prop('checked', true);
+    $('#opening_hours_fields input').prop('disabled', true);
+  }
 
 };
 
@@ -107,12 +127,23 @@ var update_image_list = function(){
 
 //add a single image by its url to teh list of images
 var add_form_image = function(url){
-  ctx = {"url": url};
-  var img = ich.tmpl_location_image(ctx);
-  console.log("adding image:", ctx, img);
-  $("#location-form-images-container").append(img);
+  if (url){
+    var ctx = {'url':url}; 
+    var img = ich.tmpl_location_image(ctx);
+    console.log("adding image:", ctx, img);
+    $("#location-form-images-container").append(img);
+  }
 };
 
+
+
+var location_form_logo_image = function(event){
+  event.preventDefault();
+  $("#logo_img_input").val(event.fpfile.url);
+  $('.location-form-logo').attr('src',event.fpfile.url );
+  //console.log("LOGO_IMG", event);
+
+};
 
 
 
@@ -148,6 +179,32 @@ var submit_form = function( event, data ) {
 } 
 
 
+
+var disable_all_opening_hours = function(){
+  console.log("disable opening hours");
+  $("#opening_hours_fields input").prop('disabled', true);
+
+};
+
+
+var enable_all_opening_hours = function(){
+  console.log("enable opening hours");
+
+  $("#opening_hours_fields input").prop('disabled', false);
+
+};
+
+
+var weekday_closed_changed = function(){
+  $(this).parent().parent().find("input").prop('disabled', this.checked);
+  $(this).prop('disabled', false);
+
+};
+
+
+
+
+
 $(document).ready(function(){
 
   //form initialization
@@ -173,6 +230,9 @@ $(document).ready(function(){
 
 
   $("#id_name").val(window.current_record['name']);
+  $("#logo_img_input").val(window.current_record['logo_img']);
+  $('.location-form-logo').attr('src',window.current_record['logo_img']);
+
   $("#geo_location").val(window.current_record['geo_location']);
   $("#address").val(window.current_record['address']['street']);
   $("#zip").val(window.current_record['address']['zip']);
@@ -185,6 +245,8 @@ $(document).ready(function(){
   $("#id_keywords").val(window.current_record['keywords']);
   $("#id_facebook").val(window.current_record['social']['facebook']);
   $("#id_twitter").val(window.current_record['social']['twitter']);
+  $("#id_youtube").val(window.current_record['social']['youtube']);
+
   $("#id_instagram").val(window.current_record['social']['instagram']);
   $("#id_admission_regular").val(window.current_record['admission']['regular']);
   $("#id_admission_students").val(window.current_record['admission']['students']);
@@ -193,7 +255,8 @@ $(document).ready(function(){
   $("#id_admission_other").val(window.current_record['admission']['other']);
 
   var list_of_images = window.current_record['image_list'].split(',');
-  for (var i in list_of_images){
+  for (var i=0; i<list_of_images.length; i++){
+    console.log("IMAGE ADD ON LOAD", i);// list_of_images[i] , list_of_images);
     add_form_image( list_of_images[i] );
   };
   $("#image_list").val(window.current_record['image_list']);
@@ -265,6 +328,23 @@ $('#admission_fieldset').on('click', function(ev){
 	//$('.remove_admission_type').parent().remove();
 	
 });
+
+
+
+$("#id_always_open").change(function(){
+  if (this.checked){
+    disable_all_opening_hours();
+  }
+  else{
+    enable_all_opening_hours();
+  }
+});
+
+
+$('.weekday_closed_checkbox').change(weekday_closed_changed)
+
+
+
 
 $("#submit-id-save").on('click', function(ev){
   console.log('submit click', ev, $('form') );

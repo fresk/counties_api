@@ -49,6 +49,42 @@
           </div>
 
 
+
+          <div id="div_id_logo" class="control-group">
+
+            <label for="logo_img" class="control-label requiredField"> 
+              Logo <span class="asteriskField">*</span>
+            </label>
+
+            <div class="controls">
+            
+              <input type="hidden" id="logo_img_input" maxlength="255" name="logo_img" type="text" value="http://dummyimage.com/100/cccccc/e8e8e8&text=logo+missing" /> 
+              
+              <input type="filepicker"
+              data-fp-button-text="Upload Logo"
+              data-fp-button-class="btn btn-success"
+              data-fp-apikey="Py0NB_yvTwGdkp6cz2Ee" 
+              data-fp-mimetypes="image/*" 
+              data-fp-container="modal" 
+              data-fp-multiple="false" 
+              data-fp-services="COMPUTER,DROPBOX,FACEBOOK,GOOGLE_DRIVE,FLICKR,GMAIL,INSTAGRAM,PICASA,FTP,WEBDAV" 
+              onchange="location_form_logo_image(event)"
+              />
+
+              <div id="location-form-logo-container">
+                  <div class="thumbnail-container">
+                    <img src="http://dummyimage.com/100/cccccc/e8e8e8&text=logo+missing" id="location-form-logo-img" class="img-rounded location-thumnail location-form-logo" />
+                  </div>
+              </div>
+ 
+            </div>
+
+          </div>
+
+
+
+
+
           <div id="div_id_images" class="control-group">
             <label for="id_images" class="control-label requiredField"> 
               Images
@@ -244,6 +280,16 @@
               </div>
             </div>
 
+            <div id="div_id_youtube" class="control-group">
+              <label for="id_youtube" class="control-label ">
+                YourTube
+              </label>
+              <div class="controls">
+                <input  id="id_youtube" maxlength="100" name="social[youtube]" type="text" /> 
+              </div>
+            </div>
+
+            
             <div id="div_id_instagram" class="control-group">
               <label for="id_instagram" class="control-label ">
                 Instagram
@@ -253,6 +299,7 @@
               </div>
             </div>
 
+
           </fieldset>
 
 
@@ -261,11 +308,32 @@
           <fieldset id="opening_hours_fieldset">
             <legend>Opening Hours</legend>
 
+            <div id="div_id_always_open" class="control-group">
+              <label for="id_always_open" class="control-label ">
+                Always Open 
+              </label>
+              <div class="controls">
+                <input type="checkbox" name="always_open" id="id_always_open"  />
+              </div>
+            </div>
+
+            <div id="opening_hours_fields">
+
+
+
+
             <script id="tmpl_opening_hours" type="text/html">
             {% verbatim %}
 <div class="control-group">
                     <label class="control-label">{{Day}}</label>
                     <div class="controls">
+
+
+                      <label class="checkbox">
+                        <input type="checkbox" name="hours[{{day}}][is_closed]" class="weekday_closed_checkbox"> Closed
+                      </label>
+
+
 
                       <div class="input-append input-prepend bootstrap-timepicker">
                         <span class="add-on">open</i></span>
@@ -284,7 +352,7 @@
 
             {% endverbatim %}
             </script>
-
+          </div>
 
 
           </fieldset>
@@ -397,8 +465,9 @@
       
        <div class="span2">
 	      <div class="formfixed">
-            <input type="submit" name="save" value="Save changes" class="btn btn-primary formbtn" id="submit-id-save" /> 
-            <input type="button" name="cancel"  value="Cancel" class="btn formbtn" id="button-id-cancel" />
+            <input type="submit" name="save" value="Save changes" class="btn btn-primary " id="submit-id-save" /> 
+            <!-- <input type="button" name="cancel"  value="Cancel" class="btn formbtn" id="button-id-cancel" /> -->
+            <a href="/home" class="btn">Cancel</a>
 	      </div>
       </div>
       

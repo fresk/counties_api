@@ -35,7 +35,7 @@ var init_opening_hours = function(){
   for (var i = 0; i  < WEEKDAYS.length; i++) {
     var ctx = {"Day": WEEKDAYS[i].capitalize(), "day": WEEKDAYS[i]};
     var hours_field = ich.tmpl_opening_hours(ctx);
-    $("#opening_hours_fieldset").append(hours_field);
+    $("#opening_hours_fields").append(hours_field);
   };
 
   $(".opening-hours-hours-field").timepicker();
@@ -95,6 +95,17 @@ var location_form_add_images = function(event){
   update_image_list();
 };
 
+
+var location_form_logo_image = function(event){
+
+  event.preventDefault();
+  $("#logo_img_input").val(event.fpfile.url);
+  $('.location-form-logo').attr('src',event.fpfile.url );
+  console.log("LOGO_IMG", event);
+
+};
+
+
 //serialize to simple texfield, so form serialization ca automatically use it
 var update_image_list = function(){
   var images = [];
@@ -124,9 +135,17 @@ var restore_from_localstorage = function(){
   var f = this.targets[0];
   for (var i=0; i< f.length; i++){
     var t = $(f[i]);
+    if(t.attr('name') == "logo_img"){
+      console.log("restoring logo image", t.val(), $('#location-form-logo-img'));
+      
+      $('#location-form-logo-img').attr('src', t.val());
+    }
     if (t.attr('name') == "image_list"){
       var images = t.val().split(',');
       $.each(images, function(idx, img_url){
+        console.log("adding image:", img_url);
+        
+        if (img_url)
         add_form_image(img_url);
       });
     }
@@ -211,7 +230,7 @@ var init_form_validation = function(){
     [ '#zip', 'integer', 'Must be a 5-digit zipcode' ],
     [ '#zip', 'presence', 'Must be a 5-digit zipcode' ],
     [ '#zip', 'exact-length:5', '' ],
-    ], { "silentSubmit": true, 'broadcastError' : true, 'disableSubmitBtn': false }
+    ], { "silentSubmit": true, 'broadcastError' : true, 'disableSubmitBtn': false}
   );
   f.on('silentSubmit', submit_form );
 
@@ -225,6 +244,27 @@ var init_form_validation = function(){
 
 };
 
+
+var disable_all_opening_hours = function(){
+  console.log("disable opening hours");
+  $("#opening_hours_fields input").prop('disabled', true);
+
+};
+
+
+var enable_all_opening_hours = function(){
+  console.log("enable opening hours");
+
+  $("#opening_hours_fields input").prop('disabled', false);
+
+};
+
+
+var weekday_closed_changed = function(){
+  $(this).parent().parent().find("input").prop('disabled', this.checked);
+  $(this).prop('disabled', false);
+
+};
 
 
 $(document).ready(function(){
@@ -290,6 +330,21 @@ $('#admission_fieldset').on('click', function(ev){
 	//$('.remove_admission_type').parent().remove();
 	
 });
+
+
+
+$("#id_always_open").change(function(){
+  if (this.checked){
+    disable_all_opening_hours();
+  }
+  else{
+    enable_all_opening_hours();
+  }
+});
+
+
+$('.weekday_closed_checkbox').change(weekday_closed_changed)
+
 
 
 $("#submit-id-save").on('click', function(ev){
