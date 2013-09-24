@@ -62,7 +62,7 @@ MIDDLEWARE_CLASSES = (
 SECRET_KEY = r"o>LvkhjTRgkyukJY,BsdASA,KHXYLCmP;AOU{)(^BYP(&*I\"OPBU:ADV(*^&%";
 ALLOWED_HOSTS = []
 INTERNAL_IPS = ['127.0.0.1']
-ADMINS = (('Your Name', 'your_email@example.com'),)
+ADMINS = (('Thomas Hansen', 'thomas@fresklabs.com'),)
 MANAGERS = ADMINS
 
 LOGIN_URL          = '/login/'

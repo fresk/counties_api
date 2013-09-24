@@ -12,13 +12,14 @@ from rest_api.views import my_locations, new_location, edit_location
 
 urlpatterns = patterns(
     "",
-    url(r'^$', index, name='index'),
-    
+    url(r'^$', about_view, name='index'),
+
     url(r'^contact/$', contact_view, name='contact'),
-    url(r'^about/$', about_view, name='about'),
+    #url(r'^about/$', about_view, name='about'),
     url(r'^help$', help_view, name='help'),
-    
-    
+
+
+    url(r'^$', index, name='manage'),
     url(r'^home/$', home, name='home'),
     url(r'^admin/$', location_admin, name='location_admin'),
     url(r'^locations_admin/', my_locations, name='my_locations'),
