@@ -6,6 +6,8 @@ assets
 
 counties_api/local_settings.py
 
+.idea/workspace.xml
+
 # C extensions
 *.so
 

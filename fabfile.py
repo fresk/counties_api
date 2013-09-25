@@ -55,7 +55,7 @@ def staging():
     #  set it to None to not use
     env.requirements_file = join(env.code_root, 'requirements.txt')
     #  always ask user for confirmation when run any tasks
-    env.ask_confirmation = True
+    env.ask_confirmation = False
 
     ### START gunicorn settings ###
     #  be sure to not have anything running on that port
@@ -64,7 +64,7 @@ def staging():
     env.rungunicorn_script = '%(django_user_home)s/scripts/rungunicorn_%(project)s.sh' % env
     env.gunicorn_workers = 2
     env.gunicorn_worker_class = "eventlet"
-    env.gunicorn_loglevel = "info"
+    env.gunicorn_loglevel = "debug"
     ### END gunicorn settings ###
 
     ### START nginx settings ###
@@ -149,7 +149,7 @@ def production():
     env.gunicorn_bind = "127.0.0.1:8100"
     env.gunicorn_logfile = '%(django_user_home)s/logs/projects/%(project)s_gunicorn.log' % env
     env.rungunicorn_script = '%(django_user_home)s/scripts/rungunicorn_%(project)s.sh' % env
-    env.gunicorn_workers = 2
+    env.gunicorn_workers = 4
     env.gunicorn_worker_class = "eventlet"
     env.gunicorn_loglevel = "info"
     ### END gunicorn settings ###
