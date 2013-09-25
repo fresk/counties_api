@@ -37,8 +37,8 @@ var persona_login_verify = function (assertion){
       data: {assertion: assertion}
     }
   ).success( function(response) {
-
-       window.location.reload();
+        window.location.reload();
+       //window.location.reload();
     }
   ).error( function(xhr, status, err) {
       console.log(xhr, status, err );
@@ -50,6 +50,7 @@ var persona_login_verify = function (assertion){
 
 var persona_logout_finalize = function(){
 
+
    console.log("ON LOGOUT ");
     $.ajax({ 
         type: 'GET', 
@@ -57,6 +58,7 @@ var persona_logout_finalize = function(){
       }
     ).success( function(xhr, status, err) {
         console.log("logout success...would reload now");
+        window.location.reload();
       }
     ).error( function(xhr, status, err) { 
       alert("Logout failure: " + err);
@@ -64,8 +66,10 @@ var persona_logout_finalize = function(){
     );
 }
 
+
+$(document).ready(function(){
 navigator.id.watch({
-  loggedInUser: null,
+  loggedInUser: window.__logged_in_user,
   onlogin: persona_login_verify,
   onlogout: persona_logout_finalize
 });
@@ -77,10 +81,11 @@ $('.persona_login_btn').on('click', function (e){
     navigator.id.request();
 });
 
-$('.persona_logout_btn').on('click', function (e){
+$('.logout_btn').on('click', function (e){
   e.preventDefault();
   console.log("LOGOUT PRESSED");
-  navigator.id.logout(); 
-  persona_logout_finalize();
+  navigator.id.logout();
 });
 
+
+});
