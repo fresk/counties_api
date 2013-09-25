@@ -23,51 +23,63 @@ $(".oauth2_login_btn").on('click', function(e){
 });
 
 
+
+
+
 // login using browserID / mozilla persona ///////////////////////
 var persona_login_verify = function (assertion){
+
+   console.log("ON LOGIN ");
+
   $.ajax({  
       type: 'POST', 
       url: '/complete/browserid/', 
       data: {assertion: assertion}
     }
   ).success( function(response) {
-      window.location.reload(); 
+
+       window.location.reload();
     }
-  ).error( function(xhr, status, err) { 
-      //navigator.id.logout();
+  ).error( function(xhr, status, err) {
       console.log(xhr, status, err );
-      //alert("Login failure: " + err);
+      alert("Login failure: " + err);
+      navigator.id.logout();
     }
   );
 };
 
 var persona_logout_finalize = function(){
+
+   console.log("ON LOGOUT ");
     $.ajax({ 
         type: 'GET', 
         url: '/logout/'
       }
-    ).success( function(res, status, xhr) { 
-        window.location.reload(); 
+    ).success( function(xhr, status, err) {
+        console.log("logout success...would reload now");
       }
     ).error( function(xhr, status, err) { 
-      console.log(xhr, status, err );
-      alert("Logout failure: " + err); 
+      alert("Logout failure: " + err);
       }
     );
 }
 
-//navigator.id.watch({
-//  onlogin: persona_login_verify,
-//  onlogout: persona_logout_finalize 
-//});
+navigator.id.watch({
+  loggedInUser: null,
+  onlogin: persona_login_verify,
+  onlogout: persona_logout_finalize
+});
 
 $('.persona_login_btn').on('click', function (e){
   e.preventDefault();
-  navigator.id.get(persona_login_verify); 
+    console.log("LOGIN PRESSED");
+  //navigator.id.get(persona_login_verify);
+    navigator.id.request();
 });
 
 $('.persona_logout_btn').on('click', function (e){
   e.preventDefault();
+  console.log("LOGOUT PRESSED");
   navigator.id.logout(); 
   persona_logout_finalize();
 });
