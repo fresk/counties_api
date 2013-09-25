@@ -2,6 +2,8 @@
 
 *.db
 
+assets
+
 counties_api/local_settings.py
 
 # C extensions
