@@ -59,7 +59,7 @@ def staging():
 
     ### START gunicorn settings ###
     #  be sure to not have anything running on that port
-    env.gunicorn_bind = "127.0.0.1:8100"
+    env.gunicorn_bind = "127.0.0.1:8101"
     env.gunicorn_logfile = '%(django_user_home)s/logs/projects/%(project)s_gunicorn.log' % env
     env.rungunicorn_script = '%(django_user_home)s/scripts/rungunicorn_%(project)s.sh' % env
     env.gunicorn_workers = 2
