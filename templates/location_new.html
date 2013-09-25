@@ -1,118 +1,134 @@
 {% include "header.html" %}
 {% include "navbar.html" %}
 
-<div id="main-container" class="container-fluid" >
-  <div class="row-fluid">
-  
-  	<div class="span2">
-	   
-	 </div>
-  	
-  	      <form id="form" action="/locations/create/" class="form-horizontal" method="post" >
-  	
-    <div class="span8 whitebg" id="formwrap">
-      <h3>Add a New Location</h3>
-      <hr/>
+<div id="main-container" class="container-fluid">
+<div class="row-fluid">
+
+<div class="span2">
+
+</div>
+
+<form id="form" action="/locations/create/" class="form-horizontal" method="post">
+
+<div class="span8 whitebg" id="formwrap">
+<h3>Add a New Location</h3>
+<hr/>
 
 
-        <fieldset>
+<fieldset>
 
-          <div id="div_id_name" class="control-group">
-            <label for="id_name" class="control-label requiredField"> 
-              Title / Name 
-              <span class="asteriskField">*</span>
-            </label>
-            <div class="controls">
-              <input placeholder="My Location" class="textinput textInput" id="id_name" maxlength="255" name="name" type="text" /> <br/>
+    <div id="div_id_name" class="control-group">
+        <label for="id_name" class="control-label requiredField">
+            Title / Name
+            <span class="asteriskField">*</span>
+        </label>
+
+        <div class="controls">
+            <input placeholder="My Location" class="textinput textInput" id="id_name" maxlength="255" name="name"
+                   type="text"/> <br/>
+        </div>
+    </div>
+
+
+    <div id="div_id_category" class="control-group">
+        <label for="id_category" class="control-label requiredField">
+            Category
+            <span class="asteriskField">*</span>
+        </label>
+
+
+        <div class="controls">
+
+            <select id="id_category" name="category[]" multiple>
+                <option>Museum                              </option>
+                <option>Zoo                                 </option>
+                <option>Arts Center/Public Art              </option>
+                <option>Science Center                      </option>
+                <option>Garden/Botanical Center             </option>
+                <option>Performance Venue/Concert Hall      </option>
+                <option>Movie Theater                       </option>
+                <option>Arts Commission or Council          </option>
+                <option>Cultural/Entertainment District     </option>
+                <option>National Historical Register        </option>
+                <option>Local Landmark                      </option>
+                <option>Historic Site                       </option>
+                <option>Medal of Honor Recipient Birthplace </option>
+                <option>Famous Iowan Birthplace             </option>
+                <option>Iowa Award Recipient Birthplace     </option>
+                <option>Certified Local Government          </option>
+                <option>Iowa Great Place                    </option>
+                <option>Underground Railroad Site           </option>
+                <option>Scenic Byway                        </option>
+                <option>Historic Barn                       </option>
+                <option>Historical Society or Commission    </option>
+                <option>Amphitheater or Riverwalk           </option>
+                <option>College or University               </option>
+                <option>Other                               </option>
+            </select>
+
+        </div>
+    </div>
+
+
+    <div id="div_id_logo" class="control-group">
+
+        <label for="logo_img" class="control-label requiredField">
+            Logo <span class="asteriskField">*</span>
+        </label>
+
+        <div class="controls">
+
+            <input type="hidden" id="logo_img_input" maxlength="255" name="logo_img" type="text"
+                   value="http://dummyimage.com/100/cccccc/e8e8e8&text=logo+missing"/>
+
+            <input type="filepicker"
+                   data-fp-button-text="Upload Logo"
+                   data-fp-button-class="btn btn-success"
+                   data-fp-apikey="Py0NB_yvTwGdkp6cz2Ee"
+                   data-fp-mimetypes="image/*"
+                   data-fp-container="modal"
+                   data-fp-multiple="false"
+                   data-fp-services="COMPUTER,DROPBOX,FACEBOOK,GOOGLE_DRIVE,FLICKR,GMAIL,INSTAGRAM,PICASA,FTP,WEBDAV"
+                   onchange="location_form_logo_image(event)"
+                    />
+
+            <div id="location-form-logo-container">
+                <div class="thumbnail-container">
+                    <img src="http://dummyimage.com/100/cccccc/e8e8e8&text=logo+missing" id="location-form-logo-img"
+                         class="img-rounded location-thumnail location-form-logo"/>
+                </div>
             </div>
-          </div>
+
+        </div>
+
+    </div>
 
 
-          <div id="div_id_category" class="control-group">
-            <label for="id_category"  class="control-label requiredField">
-              Category
-              <span class="asteriskField">*</span>
-            </label>
-            <div class="controls">
-              <label class="radio inline">
-                <input type="radio" checked="checked" name="category" id="id_category_1" value="Museum" > Museum 
-              </label>
-              <label class="radio inline">
-                <input type="radio" name="category" id="id_category_2" value="Theater" >Theater
-              </label>
-              <label class="radio inline">
-                <input type="radio" name="category" id="id_category_3" value="Historic Site" >Historic Site
-              </label>
-              <label class="radio inline">
-                <input type="radio" name="category" id="id_category_4" value="Barn" >Barn
-              </label>
-            </div>
-          </div>
+    <div id="div_id_images" class="control-group">
+        <label for="id_images" class="control-label requiredField">
+            Images
+            <span class="asteriskField">*</span>
+        </label>
+
+        <div class="controls">
+
+            <input type="filepicker"
+                   data-fp-button-text="Add Images"
+                   data-fp-button-class="btn btn-success"
+                   data-fp-apikey="Py0NB_yvTwGdkp6cz2Ee"
+                   data-fp-mimetypes="image/*"
+                   data-fp-container="modal"
+                   data-fp-multiple="true"
+                   data-fp-services="COMPUTER,DROPBOX,FACEBOOK,GOOGLE_DRIVE,FLICKR,GMAIL,INSTAGRAM,PICASA,FTP,WEBDAV"
+                   onchange="location_form_add_images(event)"
+                    />
 
 
+            <input type="hidden" name="images[]"/>
 
+            <div id="location-form-images-container">
 
-
-
-
-          <div id="div_id_logo" class="control-group">
-
-            <label for="logo_img" class="control-label requiredField"> 
-              Logo <span class="asteriskField">*</span>
-            </label>
-
-            <div class="controls">
-            
-              <input type="hidden" id="logo_img_input" maxlength="255" name="logo_img" type="text" value="http://dummyimage.com/100/cccccc/e8e8e8&text=logo+missing" /> 
-              
-              <input type="filepicker"
-              data-fp-button-text="Upload Logo"
-              data-fp-button-class="btn btn-success"
-              data-fp-apikey="Py0NB_yvTwGdkp6cz2Ee" 
-              data-fp-mimetypes="image/*" 
-              data-fp-container="modal" 
-              data-fp-multiple="false" 
-              data-fp-services="COMPUTER,DROPBOX,FACEBOOK,GOOGLE_DRIVE,FLICKR,GMAIL,INSTAGRAM,PICASA,FTP,WEBDAV" 
-              onchange="location_form_logo_image(event)"
-              />
-
-              <div id="location-form-logo-container">
-                  <div class="thumbnail-container">
-                    <img src="http://dummyimage.com/100/cccccc/e8e8e8&text=logo+missing" id="location-form-logo-img" class="img-rounded location-thumnail location-form-logo" />
-                  </div>
-              </div>
- 
-            </div>
-
-          </div>
-
-
-
-
-
-          <div id="div_id_images" class="control-group">
-            <label for="id_images" class="control-label requiredField"> 
-              Images
-              <span class="asteriskField">*</span>
-            </label>
-            <div class="controls">
-
-              <input type="filepicker"
-              data-fp-button-text="Add Images"
-              data-fp-button-class="btn btn-success"
-              data-fp-apikey="Py0NB_yvTwGdkp6cz2Ee" 
-              data-fp-mimetypes="image/*" 
-              data-fp-container="modal" 
-              data-fp-multiple="true" 
-              data-fp-services="COMPUTER,DROPBOX,FACEBOOK,GOOGLE_DRIVE,FLICKR,GMAIL,INSTAGRAM,PICASA,FTP,WEBDAV" 
-              onchange="location_form_add_images(event)"
-              />
-
-
-              <input type="hidden" name="images[]" />
-              <div id="location-form-images-container">
-
-                  <input type="hidden" id="image_list" name="image_list" value="" class="location-image-list">
+                <input type="hidden" id="image_list" name="image_list" value="" class="location-image-list">
 
                 <script id="tmpl_location_image2" type="text/html">
                 {% verbatim %}
@@ -123,214 +139,220 @@
                 {% endverbatim %}
                 </script>
 
-              
-              
-              </div>
-
 
             </div>
-          </div>
-        </fieldset>
 
 
-        <fieldset>
-          <legend>Address</legend>
+        </div>
+    </div>
+</fieldset>
 
-          <input type="hidden" name="geo_location" id="geo_location_input" value="" /> 
-          <div class="row-fluid" >
 
-            <div style="float:left;margin-right:40px;">
+<fieldset>
+    <legend>Address</legend>
 
-              <div class="control-group">
-                <label for="address" class="control-label">	
-                  Street Address
+    <input type="hidden" name="geo_location" id="geo_location_input" value=""/>
+
+    <div class="row-fluid">
+
+        <div style="float:left;margin-right:40px;">
+
+            <div class="control-group">
+                <label for="address" class="control-label">
+                    Street Address
                 </label>
-                <div class="controls"><input name="address[street]" placeholder="123 Street" type="text" value="" id="address">
+
+                <div class="controls"><input name="address[street]" placeholder="123 Street" type="text" value=""
+                                             id="address">
                 </div>
-              </div>
+            </div>
 
-              <div class="control-group">
-                <label for="zip" class="control-label">	
-                  Zip Code
+            <div class="control-group">
+                <label for="zip" class="control-label">
+                    Zip Code
                 </label>
+
                 <div class="controls"><input name="address[zip]" type="text" value="" id="zip">
                 </div>
-              </div>
+            </div>
 
-              <div class="control-group">
-                <label for="city" class="control-label">	
-                  City
+            <div class="control-group">
+                <label for="city" class="control-label">
+                    City
                 </label>
+
                 <div class="controls"><input name="address[city]" type="text" value="" id="city">
                 </div>
-              </div>
+            </div>
 
 
-              <div class="control-group">
-                <label for="country" class="control-label">	
-                  State
+            <div class="control-group">
+                <label for="country" class="control-label">
+                    State
                 </label>
+
                 <div class="controls">
-                  <select name="address[state]" id="state" disabled>
-                    <option value="IA">Iowa</option>
-                  </select>
+                    <select name="address[state]" id="state" disabled>
+                        <option value="IA">Iowa</option>
+                    </select>
                 </div>
-              </div>
-
-
-
-            </div>
-            <div id="address-map-container"></div>
-
-          </fieldset>
-
-
-
-          <fieldset>
-            <legend>Contact Information</legend>
-
-            <div id="div_id_email" class="control-group">
-              <label for="id_email" class="control-label requiredField">
-                Email
-                <span class="asteriskField">*</span>
-              </label>
-              <div class="controls">
-                <input class="textinput textInput" id="id_email" maxlength="75" name="contact[email]" type="text" /> 
-              </div>
-            </div>
-
-            <div id="div_id_phone" class="control-group">
-              <label for="id_phone" class="control-label requiredField">
-                Phone
-                <span class="asteriskField">*</span>
-              </label>
-              <div class="controls">
-                <input class="textinput textInput" id="id_phone" maxlength="20" name="contact[phone]" type="text" /> 
-              </div>
-            </div>
-
-            <div id="div_id_fax" class="control-group">
-              <label for="id_fax" class="control-label ">
-                Fax
-              </label>
-              <div class="controls">
-                <input class="textinput textInput" id="id_fax" maxlength="20" name="contact[fax]" type="text" /> 
-              </div>
-            </div>
-
-          </fieldset>
-
-
-
-          <fieldset>
-            <legend>Visitor Information
-
-            </legend>
-            <div id="div_id_website" class="control-group">
-              <label for="id_website" class="control-label ">
-                Website
-              </label>
-              <div class="controls">
-                <input class="textinput textInput" id="id_website" maxlength="200" name="website" type="text" />
-              </div>
             </div>
 
 
-            <div id="div_id_description" class="control-group">
-              <label for="id_description" class="control-label requiredField">
-                Description
-                <span class="asteriskField">*</span>
-              </label>
-              <div class="controls">
-                <textarea class="textarea" cols="70" id="id_description" name="description" rows="10"></textarea>
-              </div>
-            </div>
+        </div>
+        <div id="address-map-container"></div>
 
-            <div id="div_id_keywords" class="control-group">
-              <label for="id_keywords" class="control-label requiredField">
-                Keywords
-                <span class="asteriskField">*</span>
-              </label>
-              <div class="controls">
-                <textarea class="textarea" cols="70" id="id_keywords" name="keywords" rows="5"></textarea>
-              </div>
-            </div>
-
-          </fieldset>
+</fieldset>
 
 
+<fieldset>
+    <legend>Contact Information</legend>
+
+    <div id="div_id_email" class="control-group">
+        <label for="id_email" class="control-label requiredField">
+            Email
+            <span class="asteriskField">*</span>
+        </label>
+
+        <div class="controls">
+            <input class="textinput textInput" id="id_email" maxlength="75" name="contact[email]" type="text"/>
+        </div>
+    </div>
+
+    <div id="div_id_phone" class="control-group">
+        <label for="id_phone" class="control-label requiredField">
+            Phone
+            <span class="asteriskField">*</span>
+        </label>
+
+        <div class="controls">
+            <input class="textinput textInput" id="id_phone" maxlength="20" name="contact[phone]" type="text"/>
+        </div>
+    </div>
+
+    <div id="div_id_fax" class="control-group">
+        <label for="id_fax" class="control-label ">
+            Fax
+        </label>
+
+        <div class="controls">
+            <input class="textinput textInput" id="id_fax" maxlength="20" name="contact[fax]" type="text"/>
+        </div>
+    </div>
+
+</fieldset>
 
 
+<fieldset>
+    <legend>Visitor Information
+
+    </legend>
+    <div id="div_id_website" class="control-group">
+        <label for="id_website" class="control-label ">
+            Website
+        </label>
+
+        <div class="controls">
+            <input class="textinput textInput" id="id_website" maxlength="200" name="website" type="text"/>
+        </div>
+    </div>
 
 
+    <div id="div_id_description" class="control-group">
+        <label for="id_description" class="control-label requiredField">
+            Description
+            <span class="asteriskField">*</span>
+        </label>
 
-          <fieldset>
-            <legend>Social Media</legend>
+        <div class="controls">
+            <textarea class="textarea" cols="70" id="id_description" name="description" rows="10"></textarea>
+        </div>
+    </div>
 
-            <div id="div_id_facebook" class="control-group">
-              <label for="id_facebook" class="control-label ">
-                Facebook
-              </label>
-              <div class="controls">
-                <input  id="id_facebook" maxlength="100" name="social[facebook]" type="text" placeholder="https://www.facebook.com/username" /> 
-              </div>
-            </div>
+    <div id="div_id_keywords" class="control-group">
+        <label for="id_keywords" class="control-label requiredField">
+            Keywords
+            <span class="asteriskField">*</span>
+        </label>
 
-            <div id="div_id_twitter" class="control-group">
-              <label for="id_twitter" class="control-label ">
-                Twitter
-              </label>
-              <div class="controls">
-                <input  id="id_twitter" maxlength="100" name="social[twitter]" type="text" placeholder="https://twitter.com/username" /> 
-              </div>
-            </div>
+        <div class="controls">
+            <textarea class="textarea" cols="70" id="id_keywords" name="keywords" rows="5"></textarea>
+        </div>
+    </div>
 
-
-            <div id="div_id_youtube" class="control-group">
-              <label for="id_youtube" class="control-label ">
-                YourTube
-              </label>
-              <div class="controls">
-                <input  id="id_youtube" maxlength="100" name="social[youtube]" type="text" placeholder="http://www.youtube.com/user/username" /> 
-              </div>
-            </div>
+</fieldset>
 
 
+<fieldset>
+    <legend>Social Media</legend>
 
-            <div id="div_id_instagram" class="control-group">
-              <label for="id_instagram" class="control-label ">
-                Instagram
-              </label>
-              <div class="controls">
-                <input  id="id_instagram" maxlength="100" name="social[instagram]" type="text" placeholder="http://instagram.com/fresk" /> 
-              </div>
-            </div>
+    <div id="div_id_facebook" class="control-group">
+        <label for="id_facebook" class="control-label ">
+            Facebook
+        </label>
 
-          </fieldset>
+        <div class="controls">
+            <input id="id_facebook" maxlength="100" name="social[facebook]" type="text"
+                   placeholder="https://www.facebook.com/username"/>
+        </div>
+    </div>
 
+    <div id="div_id_twitter" class="control-group">
+        <label for="id_twitter" class="control-label ">
+            Twitter
+        </label>
 
-
-
-          <fieldset id="opening_hours_fieldset">
-            <legend>Opening Hours</legend>
-
-
-
-
-
-            <div id="div_id_always_open" class="control-group">
-              <label for="id_always_open" class="control-label ">
-                Always Open 
-              </label>
-              <div class="controls">
-                <input type="checkbox" name="always_open" id="id_always_open" />
-              </div>
-            </div>
-
-            <div id="opening_hours_fields">
+        <div class="controls">
+            <input id="id_twitter" maxlength="100" name="social[twitter]" type="text"
+                   placeholder="https://twitter.com/username"/>
+        </div>
+    </div>
 
 
-            <script id="tmpl_opening_hours" type="text/html">
+    <div id="div_id_youtube" class="control-group">
+        <label for="id_youtube" class="control-label ">
+            YourTube
+        </label>
+
+        <div class="controls">
+            <input id="id_youtube" maxlength="100" name="social[youtube]" type="text"
+                   placeholder="http://www.youtube.com/user/username"/>
+        </div>
+    </div>
+
+
+    <div id="div_id_instagram" class="control-group">
+        <label for="id_instagram" class="control-label ">
+            Instagram
+        </label>
+
+        <div class="controls">
+            <input id="id_instagram" maxlength="100" name="social[instagram]" type="text"
+                   placeholder="http://instagram.com/fresk"/>
+        </div>
+    </div>
+
+</fieldset>
+
+
+<fieldset id="opening_hours_fieldset">
+    <legend>Opening Hours</legend>
+
+
+    <div id="div_id_always_open" class="control-group">
+        <label for="id_always_open" class="control-label ">
+            Always Open
+        </label>
+
+        <div class="controls">
+            <input type="checkbox" name="always_open" id="id_always_open"/>
+        </div>
+    </div>
+
+    <div id="opening_hours_fields">
+
+
+        <script id="tmpl_opening_hours" type="text/html">
 {% verbatim %}
 <div class="control-group">
                     <label class="control-label">{{Day}}</label>
@@ -357,19 +379,16 @@
             {% endverbatim %}
             </script>
 
-          </div>
+    </div>
 
-          </fieldset>
-
-
+</fieldset>
 
 
+<fieldset id="admission_fieldset">
+    <legend>Admission</legend>
 
-          <fieldset id="admission_fieldset">
-            <legend>Admission</legend>
-            
-                     
-            <script id="tmpl_admission_type" type="text/html">
+
+    <script id="tmpl_admission_type" type="text/html">
 			{% verbatim %}
 	            <div id="div_id_admission_{{title}}" class="control-group">
 	              <label for="id_admission_{{title}}" class="control-label ">
@@ -387,130 +406,149 @@
 	            </div>
             {% endverbatim %}
             </script>
-            
 
-            <div id="div_id_admission_regular" class="control-group">
-              <label for="id_admission_regular" class="control-label ">
-                Regular
-              </label>
-              <div class="controls">
-                <div class="input-prepend input-append">
-                  <span class="add-on">$</span>
-                  <input class="textinput textInput span4" id="id_admission_regular" maxlength="75" name="admission[regular]" type="text" />
-                  <span class="add-on">.00</span>
-                </div>
-              </div>
+
+    <div id="div_id_admission_regular" class="control-group">
+        <label for="id_admission_regular" class="control-label ">
+            Regular
+        </label>
+
+        <div class="controls">
+            <div class="input-prepend input-append">
+                <span class="add-on">$</span>
+                <input class="textinput textInput span4" id="id_admission_regular" maxlength="75"
+                       name="admission[regular]" type="text"/>
+                <span class="add-on">.00</span>
             </div>
-
-            <div id="div_id_admission_children" class="control-group">
-              <label for="id_admission_children" class="control-label ">
-                Children
-              </label>
-              <div class="controls">
-                <div class="input-prepend input-append">
-                  <span class="add-on">$</span>
-                  <input class="textinput textInput span4" id="id_admission_children" maxlength="75" name="admission[children]" type="text" />
-                  <span class="add-on">.00</span>
-              </div>                </div>
-            </div>
-
-            <div id="div_id_admission_students" class="control-group">
-              <label for="id_admission_students" class="control-label ">
-                Students
-              </label>
-              <div class="controls">
-                <div class="input-prepend input-append">
-                  <span class="add-on">$</span>
-                  <input class="textinput textInput span4" id="id_admission_students" maxlength="75" name="admission[students]" type="text" />
-                  <span class="add-on">.00</span>
-              </div>                </div>
-            </div>
-
-            <div id="div_id_admission_seniors" class="control-group">
-              <label for="id_admission_seniors" class="control-label ">
-                Seniors
-              </label>
-              <div class="controls">
-                <div class="input-prepend input-append">
-                  <span class="add-on">$</span>
-                  <input class="textinput textInput span4" id="id_admission_seniors" maxlength="75" name="admission[seniors]" type="text" />
-                  <span class="add-on">.00</span>
-              </div>                </div>
-            </div>
-
-
-			<a id="add_admission_category_btn" class="btn" > add another category </a>
-			<!--
-            <div id="div_id_admission_other" class="control-group">
-              <label for="id_admission_other" class="control-label ">
-                Other
-              </label>
-              <div class="controls">
-                <div class="input-prepend input-append">
-                  <span class="add-on">$</span>
-                  <input class="textinput textInput span4" id="id_admission_other" maxlength="75" name="admission[other]" type="text" />
-                  <span class="add-on">.00</span>
-                </div>
-              </div>
-            </div>
-			-->
-
-
-
-          </fieldset>
-
-
-          
-
-
-      </div> <!-- end #formwrap -->
-      
-      <div class="span2">
-	      
-	      <div class="formfixed">
-            <input type="submit" name="save" value="Add Location" class="btn btn-primary" id="submit-id-save" /> 
-            <!-- <input type="button" name="cancel"  value="Cancel" class="btn" id="button-id-cancel" /> -->
-             <a href="/home" class="btn ">Cancel</a>
-
-          </div>
-	      
-      </div>
-              </form>
-              
-
-              
+        </div>
     </div>
-  </div>
 
-  <script src="/static/js/vendor/jquery-1.10.2.min.js"></script>
-  <script src="/static/js/vendor/jquery-migrate-1.2.1.min.js"></script>
-  <script src="/static/js/vendor/bootstrap.js"></script> 
-  <script src="/static/js/vendor/bootstrap-timepicker.js"></script>
-  <script src="/static/js/vendor/bootstrap-select.js"></script> 
-  <script src="/static/js/vendor/json2.js"></script> 
-  <script src="/static/js/vendor/jquery.serializeJSON.min.js"></script>
-  <script src="/static/js/vendor/ich.js"></script> 
-  <script src="/static/js/vendor/sisyphus.min.js"></script>
-  <script src="/static/js/vendor/nod.js"></script>
-  <script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-  <script src="/static/js/location_form.js"></script>
+    <div id="div_id_admission_children" class="control-group">
+        <label for="id_admission_children" class="control-label ">
+            Children
+        </label>
 
-  <!-- Footer -->
-  <div id="footer" class="container-fluid">
+        <div class="controls">
+            <div class="input-prepend input-append">
+                <span class="add-on">$</span>
+                <input class="textinput textInput span4" id="id_admission_children" maxlength="75"
+                       name="admission[children]" type="text"/>
+                <span class="add-on">.00</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="div_id_admission_students" class="control-group">
+        <label for="id_admission_students" class="control-label ">
+            Students
+        </label>
+
+        <div class="controls">
+            <div class="input-prepend input-append">
+                <span class="add-on">$</span>
+                <input class="textinput textInput span4" id="id_admission_students" maxlength="75"
+                       name="admission[students]" type="text"/>
+                <span class="add-on">.00</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="div_id_admission_seniors" class="control-group">
+        <label for="id_admission_seniors" class="control-label ">
+            Seniors
+        </label>
+
+        <div class="controls">
+            <div class="input-prepend input-append">
+                <span class="add-on">$</span>
+                <input class="textinput textInput span4" id="id_admission_seniors" maxlength="75"
+                       name="admission[seniors]" type="text"/>
+                <span class="add-on">.00</span>
+            </div>
+        </div>
+    </div>
+
+
+    <a id="add_admission_category_btn" class="btn"> add another category </a>
+    <!--
+    <div id="div_id_admission_other" class="control-group">
+      <label for="id_admission_other" class="control-label ">
+        Other
+      </label>
+      <div class="controls">
+        <div class="input-prepend input-append">
+          <span class="add-on">$</span>
+          <input class="textinput textInput span4" id="id_admission_other" maxlength="75" name="admission[other]" type="text" />
+          <span class="add-on">.00</span>
+        </div>
+      </div>
+    </div>
+    -->
+
+
+</fieldset>
+
+
+</div>
+<!-- end #formwrap -->
+
+<div class="span2">
+
+    <div class="formfixed">
+        <input type="submit" name="save" value="Add Location" class="btn btn-primary" id="submit-id-save"/>
+        <!-- <input type="button" name="cancel"  value="Cancel" class="btn" id="button-id-cancel" /> -->
+        <a href="/home" class="btn ">Cancel</a>
+
+    </div>
+
+</div>
+</form>
+
+
+</div>
+</div>
+
+<script src="/static/js/vendor/jquery-1.10.2.min.js"></script>
+<script src="/static/js/vendor/jquery-migrate-1.2.1.min.js"></script>
+<script src="/static/js/vendor/bootstrap.js"></script>
+<script src="/static/js/vendor/bootstrap-timepicker.js"></script>
+<script src="/static/js/vendor/bootstrap-select.js"></script>
+<script src="/static/js/vendor/json2.js"></script>
+<script src="/static/js/vendor/jquery.serializeJSON.min.js"></script>
+<script src="/static/js/vendor/ich.js"></script>
+<script src="/static/js/vendor/sisyphus.min.js"></script>
+<script src="/static/js/vendor/nod.js"></script>
+<script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+<script type="text/javascript" src="/static/js/vendor/bsmselect.js"></script>
+<script src="/static/js/location_form.js"></script>
+<script>
+  $(document).ready(function() {
+
+});
+
+</script>
+
+<!-- Footer -->
+<div id="footer" class="container-fluid">
     <hr>
     <footer>
-      <p>&copy; fresk 2013 </p>
+        <p>&copy; fresk 2013 </p>
     </footer>
-  </div>
-  <script>
-var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
- g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
- s.parentNode.insertBefore(g,s)}(document,'script'));
-  </script>  
+</div>
+<script>
+    var _gaq = [
+        ['_setAccount', 'UA-XXXXX-X'],
+        ['_trackPageview']
+    ];
+    (function (d, t) {
+        var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+        g.src = ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g, s)
+    }(document, 'script'));
+</script>
 
-  </body>
-  </html>
+</body>
+</html>
 
 

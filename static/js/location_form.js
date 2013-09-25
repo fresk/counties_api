@@ -220,6 +220,7 @@ var init_form_validation = function(){
   var f = $("form");
   f.nod([
     [ '#id_name', 'presence', 'Cannot be empty' ],
+    [ '#id_category', 'presence', 'Select at least one category' ],
     [ '#id_email', 'presence', 'Cannot be empty' ],
     [ '#id_phone', 'presence', 'Cannot be empty' ],
     [ '#id_description', 'presence', 'Cannot be empty' ],

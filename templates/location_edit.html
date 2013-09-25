@@ -27,26 +27,44 @@
           </div>
 
 
-          <div id="div_id_category" class="control-group">
-            <label for="id_category"  class="control-label requiredField">
-              Category
-              <span class="asteriskField">*</span>
-            </label>
-            <div class="controls">
-              <label class="radio inline">
-                <input type="radio" checked="checked" name="category" id="id_category_museum" value="Museum" > Museum 
-              </label>
-              <label class="radio inline">
-                <input type="radio" name="category" id="id_category_theater" value="Theater" >Theater
-              </label>
-              <label class="radio inline">
-                <input type="radio" name="category" id="id_category_historic" value="Historic Site" >Historic Site
-              </label>
-              <label class="radio inline">
-                <input type="radio" name="category" id="id_category_barn" value="Barn" >Barn
-              </label>
-            </div>
-          </div>
+    <div id="div_id_category" class="control-group">
+        <label for="id_category" class="control-label requiredField">
+            Category
+            <span class="asteriskField">*</span>
+        </label>
+
+
+        <div class="controls">
+
+            <select id="id_category" name="category[]" multiple>
+                <option>Museum                              </option>
+                <option>Zoo                                 </option>
+                <option>Arts Center/Public Art              </option>
+                <option>Science Center                      </option>
+                <option>Garden/Botanical Center             </option>
+                <option>Performance Venue/Concert Hall      </option>
+                <option>Movie Theater                       </option>
+                <option>Arts Commission or Council          </option>
+                <option>Cultural/Entertainment District     </option>
+                <option>National Historical Register        </option>
+                <option>Local Landmark                      </option>
+                <option>Historic Site                       </option>
+                <option>Medal of Honor Recipient Birthplace </option>
+                <option>Famous Iowan Birthplace             </option>
+                <option>Iowa Award Recipient Birthplace     </option>
+                <option>Certified Local Government          </option>
+                <option>Iowa Great Place                    </option>
+                <option>Underground Railroad Site           </option>
+                <option>Scenic Byway                        </option>
+                <option>Historic Barn                       </option>
+                <option>Historical Society or Commission    </option>
+                <option>Amphitheater or Riverwalk           </option>
+                <option>College or University               </option>
+                <option>Other                               </option>
+            </select>
+
+        </div>
+    </div>
 
 
 
@@ -488,6 +506,7 @@
   <script src="/static/js/vendor/nod.js"></script>
   <script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+  <script type="text/javascript" src="/static/js/vendor/bsmselect.js"></script>
   <script>
     window.current_record = {{location.data|safe}};
     

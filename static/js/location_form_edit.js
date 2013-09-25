@@ -34,10 +34,10 @@ var init_opening_hours = function(){
     var ctx = {"Day": WEEKDAYS[i].capitalize(), "day": WEEKDAYS[i]};
     var hours_field = ich.tmpl_opening_hours(ctx);
     $("#opening_hours_fields").append(hours_field);
-    console.log(ctx.day+'_open',current_record['hours'][ctx.day]);
+    //console.log(ctx.day+'_open',current_record['hours'][ctx.day]);
  
-    if (current_record['hours'][ctx.day]['is_closed'] == "on"){
-      console.log("IS CLOSED ON THIS DAY", current_record['hours'][ctx.day]['is_closed'] );
+    if ( !current_record['hours'] || (current_record['hours'][ctx.day]['is_closed'] == "on")){
+      //console.log("IS CLOSED ON THIS DAY", current_record['hours'][ctx.day]['is_closed'] );
       $('#id_hours_'+ctx.day+'_open').timepicker()
       $('#id_hours_'+ctx.day+'_close').timepicker()
       
@@ -211,6 +211,7 @@ $(document).ready(function(){
   var f = $("form");
   f.nod([
     [ '#id_name', 'presence', 'Cannot be empty' ],
+    [ '#id_category', 'presence', 'Select at least one category' ],
     [ '#id_email', 'presence', 'Cannot be empty' ],
     [ '#id_phone', 'presence', 'Cannot be empty' ],
     [ '#id_description', 'presence', 'Cannot be empty' ],
@@ -352,18 +353,33 @@ $("#submit-id-save").on('click', function(ev){
 })
 
 
-    if (window.current_record.category == "Museum"){
-	    $("#id_category_museum").prop("checked", true);
-    }
-    if (window.current_record.category == "Barn"){
-	    $("#id_category_barn").prop("checked", true);
-    }
-    if (window.current_record.category == "Historic Site"){
-	    $("#id_category_historic").prop("checked", true);
-    }
-    if (window.current_record.category == "Theater"){
-	    $("#id_category_theater").prop("checked", true);
-    }
+
+$("#id_category option").each(function(){
+   var option = $(this);
+   var cat_selected = $.inArray(option.val(), current_record.category);
+            console.log(option, cat_selected);
+   if (cat_selected != -1){
+       var selected_elem = $('<option selected>'+option.val()+'</option>');
+       option.replaceWith(selected_elem);
+
+       //$(option[0]).replaceWith
+   };
+});
+
+
+$("select[multiple]").bsmSelect({
+        addItemTarget: 'bottom',
+        animate: true,
+        highlight: true,
+        plugins: [
+
+          $.bsmSelect.plugins.compatibility()
+        ]
+      });
+
+
+
+
 
 
 });
