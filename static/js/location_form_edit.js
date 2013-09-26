@@ -372,7 +372,6 @@ $("select[multiple]").bsmSelect({
         animate: true,
         highlight: true,
         plugins: [
-
           $.bsmSelect.plugins.compatibility()
         ]
       });

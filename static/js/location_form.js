@@ -353,6 +353,16 @@ $("#submit-id-save").on('click', function(ev){
   submit_form();
 })
 
+    $("select[multiple]").bsmSelect({
+        addItemTarget: 'bottom',
+        animate: true,
+        highlight: true,
+        plugins: [
+          $.bsmSelect.plugins.compatibility()
+        ]
+      });
+
+
 
 });
 
