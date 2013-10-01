@@ -58,7 +58,7 @@
 	      
 	      <ul class="locations">
 	        {% for l in locations %}
-	        <li><a href="/location/{{l.id}}">{{l.name}} - {{ l.category }}</a></li>
+	        <li><a href="/location/{{l.id}}">{{l.name}} - {{ l.category|join:' | '}}</a></li>
 	        {% endfor %}
 	        </ul>
 	    </div>
