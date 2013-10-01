@@ -154,6 +154,12 @@ var location_form_logo_image = function(event){
 //submit the form via AJAX / API
 var submit_form = function( event, data ) {
   console.log("submit form")
+  var f = $("#form")[0];
+  if (show_form_errors()){
+    $('.form-submit-error-notice').show();
+    return;
+  }
+  $('.form-submit-error-notice').hide();
 
   var data = $("#form").serializeJSON();
   console.log(data);
@@ -203,10 +209,30 @@ var weekday_closed_changed = function(){
 
 
 
+var show_form_errors = function(){
+  console.log("SHOWING ERRORS");
+  var f = $("#form")[0];
+
+  for(var i in f.__nod.listeners ){
+    var l = f.__nod.listeners[i];
+    console.log(l, l.status);
+    if (l.status == false){
+      $('html, body').animate({
+          scrollTop: l.$el.offset().top -100
+      }, 400);
+      return true;
+    }
+  }
+  return false;
+}
+
+
+
+
 
 
 $(document).ready(function(){
-
+  $('.form-submit-error-notice').hide();
   //form initialization
   var f = $("form");
   f.nod([
@@ -222,7 +248,7 @@ $(document).ready(function(){
     [ '#zip', 'integer', 'Must be a 5-digit zipcode' ],
     [ '#zip', 'presence', 'Must be a 5-digit zipcode' ],
     [ '#zip', 'exact-length:5', '' ],
-    ], { "silentSubmit": true}
+    ], { "silentSubmit": true, 'broadcastError' : true, 'disableSubmitBtn': false}
   );
   f.on( 'silentSubmit', submit_form );
 

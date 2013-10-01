@@ -39,7 +39,7 @@
           {% for l in locations %}
           <tr>
             <td><a href="/location/{{l.id}}">{{l.name}}</a></td>
-            <td>{{l.category}}</td>
+            <td>{{l.category|join:','}}</td>
             <td>{{l.address.city}}</td>
             <td>{{l.user}}</td>
           </tr>

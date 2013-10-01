@@ -186,8 +186,10 @@ var submit_form = function( event, data ) {
   console.log("SUBMIT FORM");
   var f = $("#form")[0];
   if (show_form_errors()){
+    $('.form-submit-error-notice').show();
     return;
   }
+  $('.form-submit-error-notice').hide();
 
   var data = $("#form").serializeJSON();
   console.log(data);
@@ -269,7 +271,7 @@ var weekday_closed_changed = function(){
 
 
 $(document).ready(function(){
- 
+ $('.form-submit-error-notice').hide();
  
   var f = $("form");
   //needa reference to force serialization on some hidden fields used for 
