@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+
 import json
 
 from models import Location
@@ -17,10 +18,22 @@ def edit_location(request, uid):
 
 
 
-@login_required
-def my_locations(request):
+def _deserialize(l):
+    d = json.loads(l.data)
+    d['user'] = l.user.email
+    return d
+
+
+def location_list(request):
+    if request.method == 'GET':
+        items = [_deserialize(l) for l in Location.objects.all()]
+        return HttpResponse(json.dumps(items), content_type="application/json")
+
+    if not request.user.is_authenticated():
+        return HttpResponse('Unauthorized', status=401)
+
     if request.method == 'POST':
-        data = json.loads(request.raw_post_data)
+        data = json.loads(request.body)
         l = None
         if not data.get('id'):
             l = Location(user=request.user, data=json.dumps(data), name=data['name'])
@@ -38,14 +51,10 @@ def my_locations(request):
             l.save()
         return HttpResponse(json.dumps(l.data), content_type="application/json")
 
-    if request.method == 'GET':
-        def deserialize(l):
-            d = json.loads(l.data)
-            d['user'] = l.user.email
-            return d
 
-        items = [deserialize(l) for l in request.user.location_set.all()]
-        return HttpResponse(json.dumps(items), content_type="application/json")
 
     return HttpResponse(json.dumps({'error': 'must be get or post request'}), content_type="application/json")
+
+
+
 

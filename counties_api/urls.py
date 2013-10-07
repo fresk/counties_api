@@ -7,7 +7,7 @@ admin.autodiscover()
 
 
 from views import *
-from rest_api.views import my_locations, new_location, edit_location
+from rest_api.views import location_list, new_location, edit_location
 
 
 urlpatterns = patterns(
@@ -22,10 +22,10 @@ urlpatterns = patterns(
     url(r'^manage/$', home, name='manage'),
     url(r'^home/$', home, name='home'),
     url(r'^admin/$', location_admin, name='location_admin'),
-    url(r'^locations_admin/', my_locations, name='my_locations'),
+    url(r'^locations_admin/', location_list, name='my_locations'),
     url(r'^location/new$', new_location, name='new_location'),
     url(r'^location/(\d+)$$', edit_location, name='edit_location'),
-    url(r'^api/locations/', my_locations, name='my_locations'),
+    url(r'^api/locations/', location_list, name='my_locations'),
     #url(r'^locations/create/$', locations.views.LocationCreateView.as_view(), name="create_location"),
     #url(r'^locations/create/$', locations.views.CreateLocationView.as_view(), name="create_location"),
 
@@ -37,7 +37,7 @@ urlpatterns = patterns(
 
     url(r'', include('social_auth.urls')),
     url(r'^django-admin/', include(admin.site.urls)),
-    #url(r'api/', include('api.urls')),
+    #url(r'api/', include('rest_api.urls')),
 )
 
 if settings.DEBUG:
