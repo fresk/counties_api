@@ -19,10 +19,17 @@ ul {list-style: none; padding: 0; margin: 0;}
 
 .btn-primary {background:#2980b9;}
 
-a.persona_login_btn {padding: 10px 25px; font-size: 1.5em; text-transform: uppercase; font-weight: 100;vertical-align: top; text-align: center;   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);   background: #2980b9;   border: 0;  cursor: pointer;   -webkit-box-shadow: inset 0 -2px #2475ab;   box-shadow: inset 0 -2px #2475ab; color: #fff; margin-right: 10px;}
-a.persona_login_btn:hover {background: #2475ab; text-decoration: none;}
+.pad {padding: 20px;}
 
-#logo {position: fixed; bottom: 20px; right: 20px; opacity: 0.3;}
+a.persona_login_btn {cursor: pointer;}
+
+p.legend {font-size: 0.9em; color: #666;}
+p.legendsm {font-size: 0.8em; color: #666;}
+
+#personabtns a.persona_login_btn {padding: 10px 25px; font-size: 1.5em; text-transform: uppercase; font-weight: 100;vertical-align: top; text-align: center;   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);   background: #2980b9;   border: 0;  cursor: pointer;   -webkit-box-shadow: inset 0 -2px #2475ab;   box-shadow: inset 0 -2px #2475ab; color: #fff; margin-right: 10px;}
+#personabtns a.persona_login_btn:hover {background: #2475ab; text-decoration: none;}
+
+#logo {opacity: 0.3; margin-top: 2px;}
 #logo:hover {opacity: 1;}
 
 .firstrow {margin-bottom: 10px;}
@@ -44,14 +51,27 @@ border: 1px solid #d4d4d4;
 /* ////// login.html ////// */
 
 #aboutcopy {color: #333;}
-#aboutcopy h1 {padding-bottom: 25px; margin-top: 100px;}
+#aboutcopy h1 {padding-bottom: 25px;}
+
+#credits {position: fixed; left: 25px; bottom: 25px;}
+#credits h6 {text-transform: uppercase; font-weight: 100; font-size: 0.8em; margin: 0 0 10px 4px; padding: 0; opacity: 0.3;}
+
+ul.departments {list-style: none;}
+ul.departments li {float: left; margin: 0 25px 0 0;}
+ul.departments li a {opacity: 0.3;}
+ul.departments li a:hover {opacity: 1.0;}
 
 
 /* ////// about.html ////// */
 
-#aboutwrap {color: #fff;}
+#aboutcopy {color: #333; font-size: 1.2em; line-height: 1.4em; margin-left: 0;clear: both;}
 
-#fyiowa { margin-top: 125px; }
+#fyiowaabout {margin-top: 125px; padding-bottom: 50px; clear: both;}
+#findyourabout {font-size: 5em;}
+ul#scrollabout {font-size: 5em;}
+ul#scrollabout2 {font-size: 5em;}
+
+#fyiowa { margin-top: 125px;}
 #info {margin-top: 50px; clear: both;color: #ebebeb;}
 #signup { margin-top: 75px; clear: both;}
 
@@ -71,32 +91,28 @@ ul.scroll {list-style: none; font-size: 7em;font-weight: 700; float: left; margi
 
 
 
-/* ////// contact.html ////// */
+/* ////// contact.html & help.html ////// */
 
-#contactwrap { padding: 0;}
-
-
-
-
+#supportwrap {background: #fff; padding: 15px 25px 10px 25px;-moz-box-shadow: 0px 0px 0px #888;-webkit-box-shadow: 0px 0px 0px #888;box-shadow: 0px 0px 0px #888;}
 ul.departments {list-style: none; float: left; }
 ul.departments li {margin-bottom: 20px;}
 
 
 /* ////// home.html ////// */
 
-#locationswrap {background: #fff; padding: 5px 15px 10px 15px;-moz-box-shadow: 0px 0px 0px #888;-webkit-box-shadow: 0px 0px 0px #888;box-shadow: 0px 0px 0px #888;}
+#locationswrap {background: #fff; padding: 15px;-moz-box-shadow: 0px 0px 0px #888;-webkit-box-shadow: 0px 0px 0px #888;box-shadow: 0px 0px 0px #888;}
 #locationswrap h3 {font-size: 2em;}
 #locationswrap hr {margin: 5px 0 10px 0;}
 a.add-location {float:right;margin-top: 0px;}
 a.add-location:hover {background: #277ab0;}
 
-ul.locations {list-style: none; margin-top: 25px;}
+ul.locations {list-style: none; margin-top: 0;}
 ul.locations li {font-weight: 500; font-size: 1.675em;}
 ul.locations li a {background: #f9f9f9; display: block;padding: 25px 25px 25px 25px; color: #999; border-top: 1px solid #eee;}
 ul.locations li a:hover {background: #ebebeb; color: #fff; text-decoration: none;}
 
 /* ////// location_new.html ////// */
-#formwrap {background: #fff; padding: 15px;margin-bottom: 1em !important;}
+#formwrap {background: #fff; padding: 15px;margin-bottom: 1em !important; margin-left: 2%;}
 #formwrap h3 {text-align: left; padding-left: 25px;}
 input {width: 250px;}
 legend {color:#ccc; text-transform: uppercase; font-size: 1.5em; font-weight: 200; text-align: left; padding-left: 25px;}
@@ -404,6 +420,9 @@ div.DTFC_LeftFootWrapper table {
   #aboutwrap #info {margin-top: 30px;}
   #aboutwrap #signup {margin-top: 50px;}
   #dca-about {display: none;}
+  #findyourabout {font-size: 2em;}
+ul#scrollabout {font-size: 2em;}
+ul#scrollabout2 {font-size: 2em;}
 }
 
 			
@@ -416,12 +435,14 @@ div.DTFC_LeftFootWrapper table {
   body {padding-top: 60px;}
   .nav-support {padding-top: 5px;}
   .formfixed {position: fixed;}
+  #credits {position: fixed; left: 67px; bottom: 25px;}
 }
 
 @media (min-width: 800px) {
 
   .formfixed {position: fixed;}
-  #aboutwrap {color: #fff; padding-left: 50px;}
+  #aboutwrap {color: #333; padding-left: 50px;}
+  
 }
 
 

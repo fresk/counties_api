@@ -11,7 +11,7 @@
 <form id="form" action="/locations/create/" class="form-horizontal" method="post">
 
 <div class="span8 whitebg" id="formwrap">
-<h3>Add a New Location</h3>
+<h3>Add a New Listing</h3>
 <hr/>
 
 
@@ -107,6 +107,7 @@
     <div id="div_id_images" class="control-group">
         <label for="id_images" class="control-label requiredField">
             Images
+             
             <span class="asteriskField">*</span>
         </label>
 
@@ -141,6 +142,7 @@
 
 
             </div>
+            <p class="legendsm">By uploading, you give full permission for photos to be used at the discretion of the Iowa Department of Cultural Affairs.</p>
 
 
         </div>
@@ -266,6 +268,7 @@
 
         <div class="controls">
             <textarea class="textarea" cols="70" id="id_description" name="description" rows="10"></textarea>
+            <p class="legend">Describe your listing in a few sentences.</p>
         </div>
     </div>
 
@@ -277,6 +280,7 @@
 
         <div class="controls">
             <textarea class="textarea" cols="70" id="id_keywords" name="keywords" rows="5"></textarea>
+            <p class="legend">Enter comma-separated terms that further describe your location.</p>
         </div>
     </div>
 
@@ -469,7 +473,7 @@
     </div>
 
 
-    <a id="add_admission_category_btn" class="btn"> add another category </a>
+    <a id="add_admission_category_btn" class="btn"> add another admission category </a>
     <!--
     <div id="div_id_admission_other" class="control-group">
       <label for="id_admission_other" class="control-label ">
@@ -495,7 +499,7 @@
 <div class="span2">
 
     <div class="formfixed">
-        <input type="submit" name="save" value="Add Location" class="btn btn-primary" id="submit-id-save"/>
+        <input type="submit" name="save" value="Save Location" class="btn btn-primary" id="submit-id-save"/>
         <!-- <input type="button" name="cancel"  value="Cancel" class="btn" id="button-id-cancel" /> -->
         <a href="/home" class="btn ">Cancel</a>
         <p class="form-submit-error-notice error">You are missing a required field.</p>
