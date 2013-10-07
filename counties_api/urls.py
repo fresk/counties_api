@@ -36,7 +36,7 @@ urlpatterns = patterns(
     url(r'^close_login_popup/$', close_login_popup, name='login_popup_close'),
 
     url(r'', include('social_auth.urls')),
-    url(r'^django-admin/', include(admin.site.urls)),
+    #url(r'^django-admin/', include(admin.site.urls)),
     #url(r'api/', include('rest_api.urls')),
 )
 

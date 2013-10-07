@@ -29,10 +29,12 @@ def location_list(request):
         items = [_deserialize(l) for l in Location.objects.all()]
         return HttpResponse(json.dumps(items), content_type="application/json")
 
-    if not request.user.is_authenticated():
-        return HttpResponse('Unauthorized', status=401)
+
 
     if request.method == 'POST':
+        if not request.user.is_authenticated():
+            return HttpResponse('Unauthorized', status=401)
+        
         data = json.loads(request.body)
         l = None
         if not data.get('id'):
