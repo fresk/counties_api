@@ -53,7 +53,7 @@ border: 1px solid #d4d4d4;
 #aboutcopy {color: #333;}
 #aboutcopy h1 {padding-bottom: 25px;}
 
-#credits {position: fixed; left: 25px; bottom: 25px;}
+#credits {margin: 50px 0 0 25px;}
 #credits h6 {text-transform: uppercase; font-weight: 100; font-size: 0.8em; margin: 0 0 10px 4px; padding: 0; opacity: 0.3;}
 
 ul.departments {list-style: none;}
@@ -66,12 +66,12 @@ ul.departments li a:hover {opacity: 1.0;}
 
 #aboutcopy {color: #333; font-size: 1.2em; line-height: 1.4em; margin-left: 0;clear: both;}
 
-#fyiowaabout {margin-top: 125px; padding-bottom: 50px; clear: both;}
+#fyiowaabout {margin-top: 25px; padding-bottom: 50px; clear: both;}
 #findyourabout {font-size: 5em;}
 ul#scrollabout {font-size: 5em;}
 ul#scrollabout2 {font-size: 5em;}
 
-#fyiowa { margin-top: 125px;}
+#fyiowa { margin-top: 125px; color: #fff;}
 #info {margin-top: 50px; clear: both;color: #ebebeb;}
 #signup { margin-top: 75px; clear: both;}
 
@@ -435,14 +435,14 @@ ul#scrollabout2 {font-size: 2em;}
   body {padding-top: 60px;}
   .nav-support {padding-top: 5px;}
   .formfixed {position: fixed;}
-  #credits {position: fixed; left: 67px; bottom: 25px;}
+
 }
 
 @media (min-width: 800px) {
-
+  #fyiowaabout {margin-top: 125px;}
   .formfixed {position: fixed;}
   #aboutwrap {color: #333; padding-left: 50px;}
-  
+  #credits {position: fixed; left: 60px; bottom: 25px; margin: 0;}
 }
 
 

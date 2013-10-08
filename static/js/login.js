@@ -76,7 +76,7 @@ navigator.id.watch({
 
 $('.persona_login_btn').on('click', function (e){
   e.preventDefault();
-    console.log("LOGIN PRESSED");
+  //  console.log("LOGIN PRESSED");
   //navigator.id.get(persona_login_verify);
     navigator.id.request();
 });

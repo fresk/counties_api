@@ -1,10 +1,4 @@
-if (typeof console === "undefined"){
-    console = function(){
-        this.log = function(){
-            return;
-        }
-    }
-}
+
 
 
 
