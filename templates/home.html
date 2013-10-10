@@ -1,6 +1,6 @@
 {% include "header.html" %}
 {% include "navbar.html" %}
-
+{% load js_tags %}
 <div id="main-container" class="container-fluid" >
   <div class="row-fluid"> 
     
@@ -32,7 +32,7 @@
 	      
 	      <ul class="locations">
 	        {% for l in locations %}
-	        <li><a href="/location/{{l.id}}">{{l.name}} - {{ l.category|join:' | '}}</a></li>
+	        <li><a href="/location/{{ l.id }}">{{l.name}} - {{ l.category|join:' | '}}</a></li>
 	        {% endfor %}
 	        </ul>
 	    </div>

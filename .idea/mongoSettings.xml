@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MongoConfiguration">
+    <option name="serverConfigurations">
+      <list>
+        <ServerConfiguration>
+          <option name="label" value="findyouriowa.com" />
+          <option name="serverName" value="findyouriowa.com" />
+          <option name="serverPort" value="27017" />
+          <option name="userDatabase" value="find_your_iowa" />
+        </ServerConfiguration>
+        <ServerConfiguration>
+          <option name="label" value="localhost" />
+          <option name="serverName" value="localhost" />
+          <option name="serverPort" value="27017" />
+          <option name="userDatabase" value="find_your_iowa" />
+        </ServerConfiguration>
+      </list>
+    </option>
+    <option name="shellPath" value="/usr/local/bin/mongo" />
+  </component>
+</project>
+

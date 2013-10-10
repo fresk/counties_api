@@ -6,6 +6,30 @@ from django.template import RequestContext
 from django.shortcuts import render
 from django.contrib.messages.api import get_messages
 import json
+import pymongo
+import bson
+
+
+class ObjectIDFieldRenamer(pymongo.son_manipulator.SONManipulator):
+
+    def transform_incoming(self, son, collection):
+        if not "id" in son:
+            son["_id"] = pymongo.ObjectId(son['id'])
+        return son
+
+    def transform_outgoing(self, son, collection):
+        son['id'] = str(son['_id'])
+        if self.will_copy():
+            return bson.son.SON(son)
+        return son
+
+
+mongo_client = pymongo.MongoClient()
+db = mongo_client.find_your_iowa
+manipulator = ObjectIDFieldRenamer()
+pymongo.database.Database.add_son_manipulator(db, manipulator)
+
+
 
 """
 Main Views
@@ -31,12 +55,7 @@ def help_view(request):
 def home(request):
     """User's home view after being logged in"""
     messages = get_messages(request)
-
-    def deserialize(l):
-        d = json.loads(l.data)
-        d['user'] = l.user.email
-        return d
-    locations = [deserialize(l) for l in request.user.location_set.all()]
+    locations = db.locations.find({'user': request.user.email})
     return render(request, 'home.html', {
         'messages': get_messages(request),
         'locations': locations

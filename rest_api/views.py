@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+import pymongo
+
 
 import json
 
@@ -24,10 +26,19 @@ def _deserialize(l):
     return d
 
 
+
+
+def get_location_list(request):
+    items = [_deserialize(l) for l in Location.objects.all()]
+    return HttpResponse(json.dumps(items), content_type="application/json")
+
+
+
+
 def location_list(request):
     if request.method == 'GET':
-        items = [_deserialize(l) for l in Location.objects.all()]
-        return HttpResponse(json.dumps(items), content_type="application/json")
+        return get_location_list()
+
 
 
 
