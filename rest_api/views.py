@@ -1,12 +1,12 @@
+import json
+import logging
+
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-import pymongo
-
-
-import json
-
 from models import Location
+from counties_api.mongo_db import db, ObjectId
+from bson.json_util import dumps
 
 
 @login_required
@@ -16,7 +16,10 @@ def new_location(request):
 
 @login_required
 def edit_location(request, uid):
-    return render(request, 'location_edit.html', {'location': Location.objects.get(pk=int(uid)) })
+    #location = Location.objects.get(pk=int(uid))
+    location = db.locations.find_one({'_id': ObjectId(uid)})
+    logging.debug(location)
+    return render(request, 'location_edit.html', {'location': dumps(location)})
 
 
 
@@ -26,11 +29,9 @@ def _deserialize(l):
     return d
 
 
-
-
-def get_location_list(request):
-    items = [_deserialize(l) for l in Location.objects.all()]
-    return HttpResponse(json.dumps(items), content_type="application/json")
+def get_location_list():
+    items = [l for l in db.locations.find()]
+    return HttpResponse(dumps(items), content_type="application/json")
 
 
 
@@ -39,11 +40,8 @@ def location_list(request):
     if request.method == 'GET':
         return get_location_list()
 
-
-
-
     if request.method == 'POST':
-        if not request.user.is_authenticated():
+        if not request.user.is_authenticated(request):
             return HttpResponse('Unauthorized', status=401)
         
         data = json.loads(request.body)

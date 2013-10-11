@@ -1,39 +1,56 @@
+import json
+import logging
+
+
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
-from django.template import RequestContext
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.messages.api import get_messages
-import json
-import pymongo
-import bson
+
+from counties_api.mongo_db import db, ObjectId
+from bson import json_util
 
 
-class ObjectIDFieldRenamer(pymongo.son_manipulator.SONManipulator):
-
-    def transform_incoming(self, son, collection):
-        if not "id" in son:
-            son["_id"] = pymongo.ObjectId(son['id'])
-        return son
-
-    def transform_outgoing(self, son, collection):
-        son['id'] = str(son['_id'])
-        if self.will_copy():
-            return bson.son.SON(son)
-        return son
+"""
+Login Views
+"""
 
 
-mongo_client = pymongo.MongoClient()
-db = mongo_client.find_your_iowa
-manipulator = ObjectIDFieldRenamer()
-pymongo.database.Database.add_son_manipulator(db, manipulator)
+def login(request):
+    """Login View"""
+    if request.user.is_authenticated():
+        return HttpResponseRedirect(reverse('home'))
+    else:
+        messages = get_messages(request)
+        return render(request, 'login.html', {'messages': messages})
+
+
+def login_error(request):
+    """Login Error view"""
+    messages = get_messages(request)
+    return render(request, 'login_error.html', {'messages': messages})
+
+
+def close_login_popup(request):
+    """close login popup window from oauth providers"""
+    return render(request, 'close_popup.html', {})
+
+
+def logout(request):
+    """Logs out user"""
+    auth_logout(request)
+    return HttpResponseRedirect(reverse('index'))
 
 
 
 """
 Main Views
 """
+
+
 def index(request):
     return HttpResponseRedirect(reverse('home'))
 
@@ -42,9 +59,11 @@ def contact_view(request):
     messages = get_messages(request)
     return render(request, 'contact.html', {'messages': messages})
 
+
 def about_view(request):
     messages = get_messages(request)
     return render(request, 'about.html', {'messages': messages})
+
 
 def help_view(request):
     messages = get_messages(request)
@@ -61,20 +80,12 @@ def home(request):
         'locations': locations
     })
 
-from rest_api.models import Location
+
 
 @login_required
 def location_admin(request):
     """admin view of all locations"""
-    messages = get_messages(request)
-    query = Location.objects.all()
-
-    def deserialize(l):
-        d = json.loads(l.data)
-        d['user'] = l.user.email
-        return d
-    locations = [deserialize(l) for l in Location.objects.all()]
-
+    locations = db.locations.find()
     return render(request, 'admin.html', {
         'messages': get_messages(request),
         'locations': locations
@@ -85,41 +96,50 @@ def location_admin(request):
 Location Views
 """
 
-'''
+
 @login_required
 def new_location(request):
-    ctx = {
-        'weekdays': ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"],
-        'messages': get_messages(request),
-    }
+    return render(request, 'location_new.html')
+
+
+@login_required
+def edit_location(request, uid):
+    #location = Location.objects.get(pk=int(uid))
+    location = db.locations.find_one({'_id': ObjectId(uid)})
+    logging.debug(location)
+    return render(request, 'location_edit.html', {'location': json_util.dumps(location)})
+
+
+@login_required
+def post_location_list(request):
+    s = request.body
+    data = json_util.loads(s)
+    data['user'] = request.user.email
+    data['images'] = data.pop('image_list').split(',')
+    data['location']['coordinates'][0] = float(data['location']['coordinates'][0])
+    data['location']['coordinates'][1] = float(data['location']['coordinates'][1])
+    _id = db.locations.save(data)
+    saved = db.locations.find_one(_id)
+    return HttpResponse(json_util.dumps(saved), content_type="application/json")
+
+
+def get_location_list(request):
+    items = [l for l in db.locations.find()]
+    return HttpResponse(json_util.dumps(items), content_type="application/json")
+
+
+def location_list(request):
+    if request.method == 'GET':
+        return get_location_list(request)
     if request.method == 'POST':
-        create_location_from_form(request)
-        return HttpResponseRedirect(reverse('home'))
-    return render(request, 'locations/new_location.html', ctx)
-'''
-
-"""
-Login Views
-"""
-def login(request):
-    """Login View"""
-    if request.user.is_authenticated():
-        return HttpResponseRedirect(reverse('home'))
-    else:
-        messages = get_messages(request)
-        return render(request, 'login.html', {'messages': messages})
+        return post_location_list(request)
+    return HttpResponse(json.dumps({'error': 'must be get or post request'}), content_type="application/json")
 
 
-def login_error(request):
-    """Login Error view"""
-    messages = get_messages(request)
-    return render(request, 'login_error.html', {'messages': messages})
-
-def close_login_popup(request):
-    """close login popup window from oauth providers"""
-    return render(request, 'close_popup.html', {})
-
-def logout(request):
-    """Logs out user"""
-    auth_logout(request)
-    return HttpResponseRedirect(reverse('index'))
+@login_required
+def delete_record(request, uid):
+    _uid = {'_id': ObjectId(uid)}
+    location = db.locations.find_one(_uid)
+    db.locations_trash.save(location)
+    db.locations.remove({'_id': ObjectId(uid)})
+    return HttpResponse("OK")

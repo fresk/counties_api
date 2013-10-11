@@ -150,7 +150,12 @@
         <fieldset>
           <legend>Address</legend>
 
-          <input type="hidden" name="geo_location" id="geo_location_input" value="" /> 
+{#          <input type="hidden" name="geo_location" id="geo_location_input" value="" />#}
+
+
+            <input type="hidden" name="location[type]" id="geo_location_type" value="Point"/>
+            <input type="hidden" name="location[coordinates][0]" id="geo_location_coords_lat" value=""/>
+            <input type="hidden" name="location[coordinates][1]" id="geo_location_coords_lng" value=""/>
           <div class="row-fluid" >
 
             <div style="float:left;margin-right:40px;">
@@ -512,7 +517,7 @@
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
   <script type="text/javascript" src="/static/js/vendor/bsmselect.js"></script>
   <script>
-    window.current_record = {{location.data|safe}};
+    window.current_record = {{location|safe}};
     
 
     

@@ -79,6 +79,8 @@ var address_component_changed = function(ev){
 
 //update the map view
 var show_address_on_map = function(address) {
+
+    console.log("show address");
     while (window.marker_list.length > 0) {
       var m = window.marker_list.pop()
         m.setMap(null);
@@ -95,7 +97,14 @@ var show_address_on_map = function(address) {
       });
       map.setCenter(results[0].geometry.location);
       window.marker_list.push(marker);
-      $("#geo_location_input").val(results[0].geometry.location);
+        console.log('location:', results[0].geometry.location);
+
+      $("#geo_location_coords_lat").val(results[0].geometry.location.lat());
+      $("#geo_location_coords_lng").val(results[0].geometry.location.lng());
+        console.log($("#geo_location_coords_lng").val());
+      console.log($("#geo_location_coords_lat"));
+        console.log($("#geo_location_coords_lng"));
+
     });
   };
 
@@ -164,7 +173,13 @@ var submit_form = function( event, data ) {
   var data = $("#form").serializeJSON();
   console.log(data);
 
-  data['id'] = current_record.id;
+  if (current_record['id']){
+      data['id'] = current_record['id'];
+  }
+
+  if (current_record['_id']) {
+      data['_id'] = current_record['_id'];
+  }
 
   $.ajax({
       type: "POST",
@@ -281,12 +296,12 @@ $(document).ready(function(){
   $("#id_admission_seniors").val(window.current_record['admission']['seniors']);
   $("#id_admission_other").val(window.current_record['admission']['other']);
 
-  var list_of_images = window.current_record['image_list'].split(',');
+  var list_of_images = window.current_record['images']; //_list'].split(',');
   for (var i=0; i<list_of_images.length; i++){
     console.log("IMAGE ADD ON LOAD", i);// list_of_images[i] , list_of_images);
     add_form_image( list_of_images[i] );
   };
-  $("#image_list").val(window.current_record['image_list']);
+  $("#image_list").val(list_of_images.join(','));
 
 
   //hookup image remove buttons to let user delete images form teh list

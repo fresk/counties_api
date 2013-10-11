@@ -7,7 +7,6 @@ admin.autodiscover()
 
 
 from views import *
-from rest_api.views import location_list, new_location, edit_location
 
 
 urlpatterns = patterns(
@@ -24,8 +23,11 @@ urlpatterns = patterns(
     url(r'^admin/$', location_admin, name='location_admin'),
     url(r'^locations_admin/', location_list, name='my_locations'),
     url(r'^location/new$', new_location, name='new_location'),
-    url(r'^location/(\d+)$$', edit_location, name='edit_location'),
-    url(r'^api/locations/', location_list, name='my_locations'),
+    url(r'^location/([0-9a-f]{24})$$', edit_location, name='edit_location'),
+
+    url(r'^api/locations/delete/([0-9a-f]{24})$$', delete_record, name='delete_record'),
+    url(r'^api/locations/$', location_list, name='locations'),
+
     #url(r'^locations/create/$', locations.views.LocationCreateView.as_view(), name="create_location"),
     #url(r'^locations/create/$', locations.views.CreateLocationView.as_view(), name="create_location"),
 
