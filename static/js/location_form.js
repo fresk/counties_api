@@ -72,7 +72,10 @@ var show_address_on_map = function(address) {
       });
       map.setCenter(results[0].geometry.location);
       marker_list.push(marker);
-      $("#geo_location_input").val(results[0].geometry.location);
+      //$("#geo_location_input").val(results[0].geometry.location);
+        $("#geo_location_coords_lat").val(results[0].geometry.location.lat());
+        $("#geo_location_coords_lng").val(results[0].geometry.location.lng());
+
     });
   };
 

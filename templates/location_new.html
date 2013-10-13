@@ -154,7 +154,9 @@
 <fieldset>
     <legend>Address</legend>
 
-    <input type="hidden" name="geo_location" id="geo_location_input" value=""/>
+    <input type="hidden" name="location[type]" id="geo_location_type" value="Point"/>
+    <input type="hidden" name="location[coordinates][0]" id="geo_location_coords_lat" value=""/>
+    <input type="hidden" name="location[coordinates][1]" id="geo_location_coords_lng" value=""/>
 
     <div class="row-fluid">
 
