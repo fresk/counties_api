@@ -7,13 +7,20 @@ json_data = '''
 '''
 
 import json
+import datetime
+import pprint
+from counties_api.mongo_db import *
 
 data = json.loads(json_data)
+
+
+
+
 
 for d in data:
     record = {
     "name": "",
-    "category": ["zoo"],
+    "category": ["national_historic_landmark"],
     "location": {"type": "Point", "coordinates": [0, 0]},
     "description": "",
     "website": "",
@@ -29,5 +36,72 @@ for d in data:
     {"youtube": "", "twitter": "", "facebook": "", "instagram": ""},
     "keywords": "",
     "always_open": "on",
-    "user": "script@fresklabs.com",
+    "user": "automata@fresklabs.com",
     }
+
+    y,m,day = map(int,"01965-06-23".split("-"))
+    date_declared = datetime.date(y,m,day)
+    declared = date_declared.strftime("%A, %B %d %Y")
+
+
+    record['description'] = "Declared a National Historic Landmark on %s.\n" % declared
+    record['description'] += d['info']
+    record['name'] = d['name']
+    record['images'] = [d['image']]
+    record['location']['coordinates'] = [d['geo']['lat'], d['geo']['lng']]
+    record['website'] = "http://en.wikipedia.org/wiki/%s" % d['name'].replace(" ", "_").replace("'", "%27")
+
+    entity = db.locations.find_one({"name": d['name']})
+    if entity is None:
+        print "CREATING NEW RECORD FOR:", d['name']
+        entity = {}
+
+    entity.update(record)
+
+    if len(entity['address']['street']) == 0:
+        import requests
+        try:
+            #addr = results = Geocoder.reverse_geocode
+            coords = (record['location']['coordinates'][0], record['location']['coordinates'][1])
+            resp = requests.get("http://maps.googleapis.com/maps/api/geocode/json?latlng=%f,%f&sensor=false" % coords).json()
+
+            print
+            print "##############"
+            print record['name']
+            print resp
+            print "##############"
+            print
+
+            if resp['status'] != "OK":
+                print resp
+                raise Error("Non-Normal response status from geocoding request")
+
+            addr = resp['results'][0]
+
+            for c in addr['address_components']:
+                print  "componenet", c['types'], 'street_number' in c['types']
+                if 'street_number' in c['types']:
+                    record['address']['street'] += c['long_name']
+
+                if 'route' in c['types']:
+                    record['address']['street'] += c['long_name']
+
+                if 'locality' in c['types']:
+                    record['address']['city'] = c['long_name']
+
+                if 'postal_code' in c['types']:
+                    record['address']['zip'] = c['long_name']
+
+            entity.update(record)
+
+        except:
+            print "ERROR GEOCODING:", record['name']
+
+
+
+
+
+
+
+    db.locations.save(entity)
+    print "Saved '%s' (%s)" % (entity['name'], entity['address'])

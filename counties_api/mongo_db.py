@@ -5,7 +5,7 @@ from bson.objectid import ObjectId
 class ObjectIDFieldRenamer(pymongo.son_manipulator.SONManipulator):
 
     def transform_incoming(self, son, collection):
-        if not "id" in son:
+        if "id" in son:
             son["_id"] = ObjectId(son['id'])
         return son
 
@@ -16,7 +16,7 @@ class ObjectIDFieldRenamer(pymongo.son_manipulator.SONManipulator):
         return son
 
 
-mongo_client = pymongo.MongoClient()
+mongo_client = pymongo.MongoClient('findyouriowa.com', 27017)
 db = mongo_client.find_your_iowa
 manipulator = ObjectIDFieldRenamer()
 pymongo.database.Database.add_son_manipulator(db, manipulator)
