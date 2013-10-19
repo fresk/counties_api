@@ -21,3 +21,5 @@ db = mongo_client.find_your_iowa
 manipulator = ObjectIDFieldRenamer()
 pymongo.database.Database.add_son_manipulator(db, manipulator)
 
+db.locations.ensure_index([('location', pymongo.GEOSPHERE)])
+

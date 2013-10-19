@@ -12,12 +12,10 @@ from django.contrib.messages.api import get_messages
 
 from counties_api.mongo_db import db, ObjectId
 from bson import json_util
+from bson.son import SON
 
 
-"""
-Login Views
-"""
-
+# LOGIN VIEWS #####################################
 
 def login(request):
     """Login View"""
@@ -46,10 +44,8 @@ def logout(request):
 
 
 
-"""
-Main Views
-"""
 
+# PUBLIC VIEWS #####################################
 
 def index(request):
     return HttpResponseRedirect(reverse('home'))
@@ -70,6 +66,11 @@ def help_view(request):
     return render(request, 'help.html', {'messages': messages})
 
 
+
+
+
+# APP VIEWS #####################################
+
 @login_required
 def home(request):
     """User's home view after being logged in"""
@@ -81,7 +82,6 @@ def home(request):
     })
 
 
-
 @login_required
 def location_admin(request):
     """admin view of all locations"""
@@ -90,11 +90,6 @@ def location_admin(request):
         'messages': get_messages(request),
         'locations': locations
     })
-
-
-"""
-Location Views
-"""
 
 
 @login_required
@@ -123,8 +118,24 @@ def post_location_list(request):
     return HttpResponse(json_util.dumps(saved), content_type="application/json")
 
 
+@login_required
+def delete_record(request, uid):
+    _uid = {'_id': ObjectId(uid)}
+    location = db.locations.find_one(_uid)
+    db.locations_trash.save(location)
+    db.locations.remove({'_id': ObjectId(uid)})
+    return HttpResponse("OK")
+
+
+
+
+# API VIEWS #####################################
 def get_location_list(request):
-    items = [l for l in db.locations.find()]
+    category = request.GET.get('category', None)
+    if not category is None:
+        items = [l for l in db.locations.find({'category':category})]
+    else:
+        items = [l for l in db.locations.find()]
     return HttpResponse(json_util.dumps(items), content_type="application/json")
 
 
@@ -136,10 +147,33 @@ def location_list(request):
     return HttpResponse(json.dumps({'error': 'must be get or post request'}), content_type="application/json")
 
 
-@login_required
-def delete_record(request, uid):
-    _uid = {'_id': ObjectId(uid)}
-    location = db.locations.find_one(_uid)
-    db.locations_trash.save(location)
-    db.locations.remove({'_id': ObjectId(uid)})
-    return HttpResponse("OK")
+def recent_locations(request):
+    locations = db.locations.find().sort('_id', -1).limit(5)
+    return HttpResponse(json_util.dumps([l for l in locations]), content_type="application/json")
+
+
+def popular_locations(request):
+    locations = db.locations.find().sort().limit(5)
+    return HttpResponse(json_util.dumps([l for l in locations]), content_type="application/json")
+
+
+def locations_by_category(request, category):
+    locations = db.locations.find().sort({'category': category}).limit()
+    return HttpResponse(json_util.dumps([l for l in locations]), content_type="application/json")
+
+
+def nearby_locations(request):
+    lat = float(request.GET.get("lat"))
+    lng = float(request.GET.get("lng"))
+    dist = request.GET.get("distance", 100 * 1000)
+
+    point = SON([
+        ("type", "Point"),
+        ("coordinates", [lng, lat])
+    ])
+    geoNear = SON([
+        ('$near', {'$geometry': point}),
+        ('$maxDistance', dist)
+     ])
+    locations = db.locations.find({'location': geoNear})
+    return HttpResponse(json_util.dumps([l for l in locations]), content_type="application/json")
