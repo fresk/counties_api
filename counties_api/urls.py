@@ -35,6 +35,8 @@ urlpatterns = patterns(
     url(r'^api/recent/$', recent_locations),
     url(r'^api/popular/$', popular_locations),
     url(r'^api/nearby/$', nearby_locations),
+    url(r'^api/categories/$', category_groups),
+    url(r'^api/cities/$', city_groups),
     #url(r'^api/category/([^/]+)$', locations_by_category)
 
     #DJANGO ROUTES

@@ -10,7 +10,8 @@ class ObjectIDFieldRenamer(pymongo.son_manipulator.SONManipulator):
         return son
 
     def transform_outgoing(self, son, collection):
-        son['id'] = str(son['_id'])
+        if "_id" in son:
+            son['id'] = str(son['_id'])
         if self.will_copy():
             return bson.son.SON(son)
         return son

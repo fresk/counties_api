@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.messages.api import get_messages
+from django.template.defaultfilters import slugify
 
 from counties_api.mongo_db import db, ObjectId
 from bson import json_util
@@ -133,10 +134,11 @@ def delete_record(request, uid):
 def get_location_list(request):
     category = request.GET.get('category', None)
     if not category is None:
-        items = [l for l in db.locations.find({'category':category})]
+        result = {"result": [l for l in db.locations.find({'category': category})]}
     else:
-        items = [l for l in db.locations.find()]
-    return HttpResponse(json_util.dumps(items), content_type="application/json")
+        result = {"result": [l for l in db.locations.find()]}
+    result["ok"] = 1
+    return HttpResponse(json_util.dumps(result), content_type="application/json")
 
 
 def location_list(request):
@@ -149,17 +151,20 @@ def location_list(request):
 
 def recent_locations(request):
     locations = db.locations.find().sort('_id', -1).limit(5)
-    return HttpResponse(json_util.dumps([l for l in locations]), content_type="application/json")
+    result = {"ok": 1, "result": [l for l in locations]}
+    return HttpResponse(json_util.dumps(result), content_type="application/json")
 
 
 def popular_locations(request):
     locations = db.locations.find().sort().limit(5)
-    return HttpResponse(json_util.dumps([l for l in locations]), content_type="application/json")
+    result = {"ok": 1, "result": [l for l in locations]}
+    return HttpResponse(json_util.dumps(result), content_type="application/json")
 
 
 def locations_by_category(request, category):
     locations = db.locations.find().sort({'category': category}).limit()
-    return HttpResponse(json_util.dumps([l for l in locations]), content_type="application/json")
+    result = {"ok": 1, "result": [l for l in locations]}
+    return HttpResponse(json_util.dumps(result), content_type="application/json")
 
 
 def nearby_locations(request):
@@ -176,4 +181,27 @@ def nearby_locations(request):
         ('$maxDistance', dist)
      ])
     locations = db.locations.find({'location': geoNear})
-    return HttpResponse(json_util.dumps([l for l in locations]), content_type="application/json")
+    result = {"ok": 1, "result": [l for l in locations]}
+    return HttpResponse(json_util.dumps(result), content_type="application/json")
+
+
+def category_groups(request):
+    q = db.locations.aggregate([
+        {"$unwind": "$category"},
+        {"$group": {"_id": "$category", "count": {"$sum": 1}}},
+        {"$project": {"id": "$_id", "_id":0, "num_entries": "$count"}},
+    ])
+    return HttpResponse(json_util.dumps(q), content_type="application/json")
+
+
+def city_groups(request):
+    q = db.locations.aggregate([
+        {"$project": {"city": "$address.city"}},
+        {"$group": {"_id": "$city", "count": {"$sum": 1}}},
+        {"$project": {"name": "$_id", "_id":0, "num_entries":"$count"}},
+    ])
+
+    for c in q["result"]:
+        c['id'] = slugify(c["name"])
+
+    return HttpResponse(json_util.dumps(q), content_type="application/json")
