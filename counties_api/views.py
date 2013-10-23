@@ -132,11 +132,20 @@ def delete_record(request, uid):
 
 # API VIEWS #####################################
 def get_location_list(request):
+
+    result = None
+
     category = request.GET.get('category', None)
     if not category is None:
         result = {"result": [l for l in db.locations.find({'category': category})]}
-    else:
-        result = {"result": [l for l in db.locations.find()]}
+
+    city = request.GET.get('city', None)
+    if not city is None:
+        result = {"result": [l for l in db.locations.find({'address.city': city})]}
+
+    if result is None:
+        result = {"result": [l for l in db.locations.find().limit(200)]}
+
     result["ok"] = 1
     return HttpResponse(json_util.dumps(result), content_type="application/json")
 
