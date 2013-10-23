@@ -143,6 +143,10 @@ def get_location_list(request):
     if not city is None:
         result = {"result": [l for l in db.locations.find({'address.city': city})]}
 
+    county = request.GET.get('county', None)
+    if not city is None:
+        result = {"result": [l for l in db.locations.find({'county': county})]}
+
     if result is None:
         result = {"result": [l for l in db.locations.find().limit(200)]}
 
