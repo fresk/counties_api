@@ -128,6 +128,11 @@ def delete_record(request, uid):
     return HttpResponse("OK")
 
 
+def render_location(request, uid):
+    #location = Location.objects.get(pk=int(uid))
+    location = db.locations.find_one({'_id': ObjectId(uid)})
+    logging.debug(location)
+    return render(request, 'render.html', {'location': location})
 
 
 # API VIEWS #####################################

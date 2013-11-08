@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+ </head>
+
+<body>
+
+
+
+
+<h4>Descriotion:</h4>
+<p>{{ location.description }}</p>
+
+<h4>Website:</h4>
+<p>{{ location.website }}</p>
+
+<h4>Contact:</h4>
+<address>
+    {{location.name}}<br>
+    {{ address.street }}
+    {{ address.city }}, {{ address.zip }}, IA<br>
+</address>
+<p><b>phone:</b> {{location.contact.phone}}</p>
+<p><b>email:</b> {{ location.contact.email }}</p>
+
+</body>
+</html>

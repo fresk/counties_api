@@ -39,6 +39,9 @@ urlpatterns = patterns(
     url(r'^api/cities/$', city_groups),
     #url(r'^api/category/([^/]+)$', locations_by_category)
 
+
+    # render routes
+    url(r'^render/location/([0-9a-f]{24})$$', render_location),
     #DJANGO ROUTES
     #url(r'^django-admin/', include(admin.site.urls)),
     #url(r'api/', include('rest_api.urls')),
