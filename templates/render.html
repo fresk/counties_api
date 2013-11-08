@@ -4,8 +4,18 @@
 <style>
     body{
         font-family: Avenir, Helvetica, Arial, sans-serif;
-        padding-left: 20px;
+        padding-left: 15px;
         padding-right: 20px;
+        max-width: 280px;
+    }
+
+    h4{
+        margin-bottom:0;
+    }
+
+    p{
+        margin-top:0;
+
     }
  </style>
 </head>
@@ -15,17 +25,53 @@
 
 <p>{{ location.description }}</p>
 
-<h4>Website:</h4>
-<p>{{ location.website }}</p>
-
 <h4>Contact:</h4>
 <address>
     {{location.name}}<br>
-    {{ address.street }}
-    {{ address.city }}, {{ address.zip }}, IA<br>
+    {{ location.address.street }}<br/>
+    {{ location.address.city }}, {{ location.address.zip }}, IA<br>
 </address>
-<p><b>phone:</b> {{location.contact.phone}}</p>
-<p><b>email:</b> {{ location.contact.email }}</p>
+
+{% if location.website %}
+<h4>Website:</h4>
+<p>{{ location.website }}</p>
+{% endif %}
+
+{% if location.contact.phone %}
+<h4>Phone:</h4>
+<p>{{location.contact.phone}}</p>
+{% endif %}
+
+{% if location.contact.email %}
+<h4>Email:</h4>
+<p>{{ location.contact.email }}</p>
+{% endif %}
+
+{% if location.social.facebook %}
+    <h4>Facebook:</h4>
+    <p>{{ location.social.facebook }}</p>
+{% endif %}
+
+{% if location.social.youtube %}
+    <h4>YouTube:</h4>
+    <p>{{ location.social.youtube }}</p>
+{% endif %}
+
+{% if location.social.twitter %}
+    <h4>Twitter:</h4>
+    <p>{{ location.social.twitter }}</p>
+{% endif %}
+
+{% if location.social.instagram %}
+    <h4>Instagram:</h4>
+    <p>{{ location.social.instagram }}</p>
+{% endif %}
+
+{% if location.keywords %}
+    <h4>Keywords:</h4>
+    <p>{{ location.keywords }}</p>
+{% endif %}
+
 
 </body>
 </html>
