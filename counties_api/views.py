@@ -153,7 +153,7 @@ def get_location_list(request):
         result = {"result": [l for l in db.locations.find({'county': county})]}
 
     if result is None:
-        result = {"result": [l for l in db.locations.find().limit(500)]}
+        result = {"result": [l for l in db.locations.find().limit(225)]}
 
     result["ok"] = 1
     return HttpResponse(json_util.dumps(result), content_type="application/json")
