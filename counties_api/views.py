@@ -110,10 +110,13 @@ def edit_location(request, uid):
 def post_location_list(request):
     s = request.body
     data = json_util.loads(s)
+    logging.error(data)
     data['user'] = request.user.email
     data['images'] = data.pop('image_list').split(',')
     data['location']['coordinates'][0] = float(data['location']['coordinates'][0])
     data['location']['coordinates'][1] = float(data['location']['coordinates'][1])
+    logging.debug(data)
+    logging.error(data)
     _id = db.locations.save(data)
     saved = db.locations.find_one(_id)
     return HttpResponse(json_util.dumps(saved), content_type="application/json")

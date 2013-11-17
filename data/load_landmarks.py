@@ -16,7 +16,6 @@ data = json.loads(json_data)
 
 
 
-
 for d in data:
     record = {
     "name": "",
