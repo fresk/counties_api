@@ -177,7 +177,7 @@ def recent_locations(request):
 
 
 def popular_locations(request):
-    locations = db.locations.find().sort().limit(5)
+    locations = db.locations.find().sort('_id', 1).limit(10)
     result = {"ok": 1, "result": [l for l in locations]}
     return HttpResponse(json_util.dumps(result), content_type="application/json")
 
