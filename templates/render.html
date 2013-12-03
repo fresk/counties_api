@@ -43,10 +43,62 @@
 </address>
 
 
-{% if location|get_raw:"Artist About" %}
+{% if location|get_raw:"Location" %}
+    <h4>Location:</h4>
+    <p>{{ location|get_raw:"Location" }}</p>
+{% endif %}
+
+{% if location|get_raw:"Location District" %}
+    <h4>Location:</h4>
+    <p>{{ location|get_raw:"Location District" }}</p>
+{% endif %}
+
+{% if location|get_raw:"Date" %}
+    <h4>Date:</h4>
+    <p>{{ location|get_raw:"Date" }}</p>
+{% endif %}
+
+
+{% if location|get_raw:"Artist Name" %}
     <h4>About the Artist:</h4>
+    <h5>{{ location|get_raw:"Artist Name" }}</h5>
+    {% if location|get_raw:"Nationality, Birth-Death" %}{{ location|get_raw:"Nationality, Birth-Death" }}{% endif %}
+    {% if location|get_raw:"Artist Website" %}{{ location|get_raw:"Artist Website" }}{% endif %}
     <p>{{ location|get_raw:"Artist About" }}</p>
 {% endif %}
+
+{% if location|get_raw:"Photo Credit" %}
+    <h4>Photo Credit:</h4>
+    <p>{{ location|get_raw:"Photo Credit" }}</p>
+{% endif %}
+
+{% if location|get_raw:"Materials" %}
+    <h4>Materials:</h4>
+    <p>{{ location|get_raw:"Materials" }}</p>
+{% endif %}
+
+{% if location.always_open %}
+<h4>Hours:</h4>
+<p>Always open</p>
+{% endif %}
+
+{% if location.hours %}
+<h4>Hours:</h4>
+<ul class="hours">
+<li><span class="hours-day">Monday</span> {{ location.hours.monday.open }} - {{ location.hours.monday.close }} {% if location.hours.monday.is_closed == "on" %} closed {% endif %}</li>
+<li><span class="hours-day">Tuesday</span> {{ location.hours.tuesday.open }} - {{ location.hours.tuesday.close }} {% if location.hours.tuesday.is_closed == "on" %} closed {% endif %}</li>
+<li><span class="hours-day">Wednesday</span> {{ location.hours.wednesday.open }} - {{ location.hours.wednesday.close }} {% if location.hours.wednesday.is_closed == "on" %} closed {% endif %}</li>
+<li><span class="hours-day">Thursday</span> {{ location.hours.thursday.open }} - {{ location.hours.thursday.close }} {% if location.hours.thursday.is_closed == "on" %} closed {% endif %}</li>
+<li><span class="hours-day">Friday</span> {{ location.hours.friday.open }} - {{ location.hours.friday.close }} {% if location.hours.friday.is_closed == "on" %} closed {% endif %}</li>
+<li><span class="hours-day">Saturday</span> {{ location.hours.saturday.open }} - {{ location.hours.saturday.close }} {% if location.hours.saturday.is_closed == "on" %} closed {% endif %}</li>
+<li><span class="hours-day">Sunday</span> {{ location.hours.sunday.open }} - {{ location.hours.sunday.close }} {% if location.hours.sunday.is_closed == "on" %} closed {% endif %}</li>
+</ul>
+{% endif %}
+
+
+
+
+
 
 
 {% if location.website %}
