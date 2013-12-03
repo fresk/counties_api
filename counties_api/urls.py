@@ -31,6 +31,7 @@ urlpatterns = patterns(
     url(r"^locations/delete/([0-9a-f]{24})$$", delete_record, name='delete_record'),
 
     # API ROUTES
+    url(r'^api/locations/([0-9a-f]{24})$$', location_single),
     url(r'^api/locations/$', location_list),
     url(r'^api/recent/$', recent_locations),
     url(r'^api/popular/$', popular_locations),

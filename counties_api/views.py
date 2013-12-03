@@ -16,6 +16,9 @@ from bson import json_util
 from bson.son import SON
 
 
+def to_json(obj):
+    return json_util.dumps(obj, indent=4, sort_keys=True)
+
 # LOGIN VIEWS #####################################
 
 def login(request):
@@ -159,7 +162,12 @@ def get_location_list(request):
         result = {"result": [l for l in db.locations.find().limit(225)]}
 
     result["ok"] = 1
-    return HttpResponse(json_util.dumps(result), content_type="application/json")
+    return HttpResponse(to_json(result), content_type="application/json")
+
+
+def location_single(request, uid):
+    result = {"result": db.locations.find_one({'_id': ObjectId(uid)}) }
+    return HttpResponse(to_json(result), content_type="application/json")
 
 
 def location_list(request):
@@ -167,25 +175,25 @@ def location_list(request):
         return get_location_list(request)
     if request.method == 'POST':
         return post_location_list(request)
-    return HttpResponse(json.dumps({'error': 'must be get or post request'}), content_type="application/json")
+    return HttpResponse(to_json({'error': 'must be get or post request'}), content_type="application/json")
 
 
 def recent_locations(request):
     locations = db.locations.find().sort('_id', -1).limit(5)
     result = {"ok": 1, "result": [l for l in locations]}
-    return HttpResponse(json_util.dumps(result), content_type="application/json")
+    return HttpResponse(to_json(result), content_type="application/json")
 
 
 def popular_locations(request):
     locations = db.locations.find().sort('_id', 1).limit(10)
     result = {"ok": 1, "result": [l for l in locations]}
-    return HttpResponse(json_util.dumps(result), content_type="application/json")
+    return HttpResponse(to_json(result), content_type="application/json")
 
 
 def locations_by_category(request, category):
     locations = db.locations.find().sort({'category': category}).limit()
     result = {"ok": 1, "result": [l for l in locations]}
-    return HttpResponse(json_util.dumps(result), content_type="application/json")
+    return HttpResponse(to_json(result), content_type="application/json")
 
 
 def nearby_locations(request):
@@ -203,7 +211,7 @@ def nearby_locations(request):
      ])
     locations = db.locations.find({'location': geoNear})
     result = {"ok": 1, "result": [l for l in locations]}
-    return HttpResponse(json_util.dumps(result), content_type="application/json")
+    return HttpResponse(to_json(result), content_type="application/json")
 
 
 def category_groups(request):
@@ -212,7 +220,7 @@ def category_groups(request):
         {"$group": {"_id": "$category", "count": {"$sum": 1}}},
         {"$project": {"id": "$_id", "_id":0, "num_entries": "$count"}},
     ])
-    return HttpResponse(json_util.dumps(q), content_type="application/json")
+    return HttpResponse(to_json(q), content_type="application/json")
 
 
 def city_groups(request):
@@ -225,4 +233,4 @@ def city_groups(request):
     for c in q["result"]:
         c['id'] = slugify(c["name"])
 
-    return HttpResponse(json_util.dumps(q), content_type="application/json")
+    return HttpResponse(to_json(q), content_type="application/json")
