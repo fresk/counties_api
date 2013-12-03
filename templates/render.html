@@ -31,6 +31,7 @@
 </head>
 
 <body>
+{% load render_filters %}
 
 <h2>{{ location.name }}</h2>
 <p>{{ location.description }}</p>
@@ -40,6 +41,13 @@
     {{ location.address.street }}<br/>
     {{ location.address.city }}, {{ location.address.zip }}, IA<br>
 </address>
+
+
+{% if location|get_raw:"Artist About" %}
+    <h4>About the Artist:</h4>
+    <p>{{ location|get_raw:"Artist About" }}</p>
+{% endif %}
+
 
 {% if location.website %}
 <h4>Website:</h4>

@@ -26,3 +26,6 @@ def set_var(parser, token):
     return SetVarNode(parts[1], parts[3])
 
 register.tag('set', set_var)
+
+
+
