@@ -9,12 +9,16 @@
         max-width: 280px;
         font-size: 13px;
 
+    {% if location.images %}
+      background-image:url('{{location.images.0}}');
+    {% endif %}
     }
 
     h2{
         margin:0;
         padding: 20px 5px 10px 0;
         line-height: 1.2em;
+        color: #ffffff;
     }
     
     h4 {
@@ -35,11 +39,6 @@
 {% load render_filters %}
 
 <h2>{{ location.name }}</h2>
-
-  {% for image in location.images %}
-  <img src="{{image}}" />
-  {% endfor %}
-
 
 
 </body>
