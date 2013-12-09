@@ -42,6 +42,7 @@ urlpatterns = patterns(
 
 
     # render routes
+    url(r'^render/location/list-item/([0-9a-f]{24})$$', render_location_list_item),
     url(r'^render/location/([0-9a-f]{24})$$', render_location),
     #DJANGO ROUTES
     #url(r'^django-admin/', include(admin.site.urls)),

@@ -40,7 +40,7 @@ conn = sqlite3.connect('locations.db')
 c = conn.cursor()
 
 c.execute("""
-CREATE TABLE locations (
+CREATE VIRTUAL TABLE locations using fts3 (
   id varchar PRIMARY KEY NOT NULL,
   lat float,
   lng float,
@@ -49,7 +49,9 @@ CREATE TABLE locations (
   images varchar,
   categories varchar,
   popularity float,
-  last_update integer
+  last_update integer,
+  search_text varchar
+
 );
 """)
 
@@ -78,10 +80,11 @@ for r in db.locations.find():
         ",".join(r['images']),
         ",".join(r['category']),
         r['popularity'], #popularity,
-        r['last_update']
+        r['last_update'],
+        "%s  %s  %s %s %s" % (r['name'],  r['address']['city'], r['description'], r['keywords'], ",".join(r['category']))
     ]
 
-    c.execute("INSERT INTO locations VALUES (?,?,?,?,?,?,?,?,?)", row)
+    c.execute("INSERT INTO locations VALUES (?,?,?,?,?,?,?,?,?,?)", row)
     for cat in r['category']:
         c.execute("INSERT INTO location_categories VALUES (?,?)", [cat, r['id']] )
 

@@ -140,6 +140,11 @@ def render_location(request, uid):
     logging.debug(location)
     return render(request, 'render.html', {'location': location})
 
+def render_location_list_item(request, uid):
+    #location = Location.objects.get(pk=int(uid))
+    location = db.locations.find_one({'_id': ObjectId(uid)})
+    logging.debug(location)
+    return render(request, 'render-list-item.html', {'location': location})
 
 # API VIEWS #####################################
 def get_location_list(request):
