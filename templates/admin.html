@@ -33,15 +33,17 @@
             <th>Category</th>
             <th>City</th>
             <th>Owned By</th>
+            <th><i class="icon-trash"></i></th>
           </tr>
         </thead>
         <tbody>
           {% for l in locations %}
-          <tr>
+          <tr class="location-row-{{l.id}}">
             <td><a href="/location/{{l.id}}">{{l.name}}</a></td>
             <td>{{l.category|join:','}}</td>
             <td>{{l.address.city}}</td>
             <td>{{l.user}}</td>
+            <td><a data-locationid="{{l.id}}" class="delete-record"><i class="icon-trash"></i></a></td>
           </tr>
           {% endfor %}
         </tbody>
@@ -51,6 +53,17 @@
 </div>
 <script>
 $(document).ready(function() {
+
+
+    $(".delete-record").on('click', function(){
+      var uid = $(this).data('locationid');  
+      $.get("/locations/delete/"+uid, function(data){
+       console.log("delete", data); 
+       $(".location-row-"+uid).fadeOut().remove();
+       });
+    });
+
+
 
 /* Set the defaults for DataTables initialisation */
 $.extend( true, $.fn.dataTable.defaults, {
@@ -199,15 +212,6 @@ if ( $.fn.DataTable.TableTools ) {
 		}
 	} );
 }
-
-
-
-
-
-
-
-
-
 
 
 
