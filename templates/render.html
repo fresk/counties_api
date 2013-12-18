@@ -6,9 +6,12 @@
         font-family: "Avenir", Helvetica, Arial, sans-serif;
         padding-left: 10px;
         padding-right: 15px;
-        max-width: 280px;
+        max-width: 255px;
         font-size: 13px;
+        height: auto;
     }
+    
+    img {max-width: 255px;}
 
     h2{
         margin:0;
@@ -17,9 +20,16 @@
     }
     
     h4 {
-	    padding: 15px 0 0 0;
+	    padding: 1.5em 0 0.2em 0;
 	    margin: 0;
+	    font-weight: 100;
+	    text-transform: uppercase;
+	    font-size: 0.8em;
+	    color: #999;
     }
+    
+    h5 {padding: 0 0 0 0; margin: 0; font-size: 2em; font-weight: 200; line-height: 1em;}
+    h6 {padding: 0; margin: 0; font-size: 1em; font-weight: 200; font-style: italic; color: #999;}
 
     p{
         margin-top:0;
@@ -27,16 +37,24 @@
 
     }
     a {text-decoration: none; color: #7eb8dc;}
+    
+    .ptop {padding-top: 1em;}
+    
+    p.description {padding-top: 1.5em;}
+    ul.hours {list-style: none; padding: 0; margin: 0;}
+    span.hours-day {color: #777; font-weight: 200;}
+    
+    .logo {padding:25px 0;}
  </style>
 </head>
 
 <body>
+
 {% load render_filters %}
 
 <h2>{{ location.name }}</h2>
-<p>{{ location.description }}</p>
 
-<h4>Contact:</h4>
+<h4>Address:</h4>
 <address>
     {{ location.address.street }}<br/>
     {{ location.address.city }}, {{ location.address.zip }}, IA<br>
@@ -53,18 +71,28 @@
     <p>{{ location|get_raw:"Location District" }}</p>
 {% endif %}
 
+{% if location|get_raw:"Materials" %}
+    <h4>Materials:</h4>
+    <p>{{ location|get_raw:"Materials" }}</p>
+{% endif %}
+
 {% if location|get_raw:"Date" %}
     <h4>Date:</h4>
     <p>{{ location|get_raw:"Date" }}</p>
 {% endif %}
 
 
+{% if location.description %}
+<p class="description">{{ location.description }}</p>
+{% endif %}
+
+
 {% if location|get_raw:"Artist Name" %}
     <h4>About the Artist:</h4>
     <h5>{{ location|get_raw:"Artist Name" }}</h5>
-    {% if location|get_raw:"Nationality, Birth-Death" %}{{ location|get_raw:"Nationality, Birth-Death" }}{% endif %}
-    {% if location|get_raw:"Artist Website" %}{{ location|get_raw:"Artist Website" }}{% endif %}
-    <p>{{ location|get_raw:"Artist About" }}</p>
+    {% if location|get_raw:"Nationality, Birth-Death" %} <h6>{{ location|get_raw:"Nationality, Birth-Death" }}</h6>{% endif %}
+    {% if location|get_raw:"Artist Website" %} <h6>{{ location|get_raw:"Artist Website" }}</h6>{% endif %}
+    <p class="ptop">{{ location|get_raw:"Artist About" }}</p>
 {% endif %}
 
 {% if location|get_raw:"Photo Credit" %}
@@ -72,10 +100,7 @@
     <p>{{ location|get_raw:"Photo Credit" }}</p>
 {% endif %}
 
-{% if location|get_raw:"Materials" %}
-    <h4>Materials:</h4>
-    <p>{{ location|get_raw:"Materials" }}</p>
-{% endif %}
+
 
 {% if location.always_open %}
 <h4>Hours:</h4>
@@ -134,6 +159,10 @@
 {% if location.social.instagram %}
     <h4>Instagram:</h4>
     <p>{{ location.social.instagram }}</p>
+{% endif %}
+
+{% if location.logo_img %}
+<img class="logo" src="{{ location.logo_img }}" />
 {% endif %}
 
 <!--
